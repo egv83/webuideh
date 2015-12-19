@@ -1,0 +1,542 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="/layout/template.xhtml">
+        <ui:define name="content" >
+            <f:view transient="true" > 
+                <h:form id="agenteForm" enctype="multipart/form-data" >
+                    <p:toolbar>
+                        <f:facet name="left">
+                            <p:commandButton value="Grabar" icon="ui-icon-disk" action="#{agenteControl.grabar()}" ajax="false" update=":agenteForm,:growl" />
+                        </f:facet>
+                    </p:toolbar>
+                    <p:tabView id="tabViewDatos">
+
+                        <p:tab id="tadDatos" title="Datos Agente">
+
+                            <h:panelGrid columns="2">
+                                <p:outputLabel for="estado" value="Estado"/>
+                                <p:selectOneMenu id="estado" value="#{agenteControl.idEstado}" required="false" >    
+                                    <f:selectItem itemValue="" itemLabel="Seleccione"/>
+                                    <f:selectItems value="#{agenteControl.getListParametros(agenteControl.estado)}"/>        
+                                </p:selectOneMenu>
+                                
+                                <h:outputLabel for="cedula" value="Cedula: *" />
+                                <p:inputText id="cedula" value="#{agenteControl.agente.cedAgente}" required="false" requiredMessage="Ingrese la cedula" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" />
+
+                                <p:outputLabel for="grado" value="Grado"/>
+                                <p:selectOneMenu id="grado" value="#{agenteControl.idGrado}" required="false" >
+                                    <f:selectItem itemValue="" itemLabel="Seleccione"/>
+                                    <f:selectItems  value="#{agenteControl.getListParametros(agenteControl.grado)}" />
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="nombre" value="Nombres"/>
+                                <p:inputText id="nombre" value="#{agenteControl.agente.nomAgente}" required="false"/>
+
+                                <p:outputLabel for="apellido" value="Apellidos"/>
+                                <p:inputText id="apellido" value="#{agenteControl.agente.apellAgente}" required="false"/>
+
+                                <p:outputLabel for="sexo" value="Sexo"/>
+                                <p:selectOneMenu id="sexo" value="#{agenteControl.idSexo}" required="false">    
+                                    <f:selectItem itemValue="" itemLabel="Seleccione"/>
+                                    <f:selectItems value="#{agenteControl.getListParametros(agenteControl.sexo)}" />        
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="estadocivil" value="Estado Civil"/>
+                                <p:selectOneMenu id="estadocivil" value="#{agenteControl.idEstadoCivil}" required="false">    
+                                    <f:selectItem itemValue="" itemLabel="Seleccione"/>
+                                    <f:selectItems value="#{agenteControl.getListParametros(agenteControl.estado_Civil)}" />        
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="sangre" value="Tipo Sangre"/>
+                                <p:selectOneMenu id="sangre" value="#{agenteControl.idSangre}" required="false">    
+                                    <f:selectItem itemValue="" itemLabel="Seleccione"/>
+                                    <f:selectItems value="#{agenteControl.getListParametros(agenteControl.sangre)}" />        
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="niveleducacion" value="Nivel Educación"/>
+                                <p:selectOneMenu id="niveleducacion" value="#{agenteControl.idNivelEducacion}" required="false">    
+                                    <f:selectItem itemValue="" itemLabel="Seleccione"/>
+                                    <f:selectItems value="#{agenteControl.getListParametros(agenteControl.nivel_Educacion)}" />        
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="titulo" value="Titulo Obtenido"/>
+                                <p:selectOneMenu id="titulo" value="#{agenteControl.idTitulo}" required="false">    
+                                    <f:selectItem itemValue="" itemLabel="Seleccione"/>
+                                    <f:selectItems value="#{agenteControl.getListParametros(agenteControl.titulo)}" />        
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="fechanacimiento" value="Fecha de Nacimiento"/>
+                                <p:calendar id="fechanacimiento" value="#{agenteControl.agente.fechaNac}"  required="false" pattern="dd-MM-yyyy" locale="de" navigator="true" />
+
+                                <p:outputLabel for="correoagente" value="Correo"/>
+                                <p:inputText id="correoagente" value="#{agenteControl.agente.correoAgente}" required="false"/>
+
+                                <p:outputLabel for="nombrecombate" value="Nombre de Combate"/>
+                                <p:inputText id="nombrecombate" value="#{agenteControl.agente.nomCombate}" required="false" />
+
+                                <p:outputLabel for="servicio" value="Tipo de Servicio"/>
+                                <p:selectOneMenu id="servicio" value="#{agenteControl.idServicio}" required="false">    
+                                    <f:selectItem itemValue="" itemLabel="Seleccione"/>
+                                    <f:selectItems value="#{agenteControl.getListParametros(agenteControl.servicio)}" />        
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="agencia" value="Agencia"/>
+                                <p:selectOneMenu id="agencia" value="#{agenteControl.idAgencia}" required="false">    
+                                    <f:selectItem itemValue="" itemLabel="Seleccione"/>
+                                    <f:selectItems value="#{agenteControl.getListParametros(agenteControl.agencia)}" />        
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="departamento" value="Departamento"/>
+                                <p:selectOneMenu id="departamento" value="#{agenteControl.idDepartamento}" required="false">    
+                                    <f:selectItem itemValue="" itemLabel="Seleccione"/>
+                                    <f:selectItems value="#{agenteControl.getListParametros(agenteControl.departamento)}" />        
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="licencia" value="Licencia de Conducir"/>
+                                <p:selectOneMenu id="licencia" value="#{agenteControl.idLicencia}" required="false">    
+                                    <f:selectItem itemValue="" itemLabel="Seleccione"/>
+                                    <f:selectItems value="#{agenteControl.getListParametros(agenteControl.licencia_Conducir)}" />        
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="tallaropa" value="Talla de Ropa"/>
+                                <p:inputText id="tallaropa" value="#{agenteControl.agente.tallaAgente}" required="false" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" /> 
+
+                                <p:outputLabel for="tallacalzado" value="Talla de Calzado"/>
+                                <p:inputText id="tallacalzado" value="#{agenteControl.agente.calzadoAgente}" required="false" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" /> 
+
+                                <p:outputLabel for="gorra" value="Talla de Gorra"/>
+                                <p:inputText id="gorra" value="#{agenteControl.agente.gorraAgente}" required="false" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" /> 
+
+                                <p:outputLabel for="telefonoagencia" value="Telefono Agencia: " />
+                                <p:inputText id="telefonoagencia" value="#{agenteControl.agente.telefono1}" required="false" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" /> 
+
+                                <p:outputLabel for="telefonopersonal" value="Telefono Personal: "/>
+                                <p:inputText id="telefonopersonal" value="#{agenteControl.agente.telefono2}" required="false" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" />
+
+                                <p:outputLabel for="direccion" value="Direccion Domicilio: "/>
+                                <p:inputTextarea id="direccion" value="#{agenteControl.agente.direcAgente}" required="false" rows="3" cols="30" />
+
+                                <p:outputLabel />
+                                <h:panelGrid columns="2">
+                                    <p:fileUpload label="Avansado" value="#{agenteControl.file}" mode="advanced" invalidFileMessage="Tipo de archivo invalido"
+                                                  fileLimitMessage="Tatal de archivos no permitidos, solo se permite 1 archivo"
+                                                  invalidSizeMessage="Tamaño de archivo no permitido solo se permite archivos de 2MB"
+                                                  multiple="false" fileLimit="1" sizeLimit="2097152" 
+                                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                                  fileUploadListener="#{agenteControl.upload}" update="image" />
+                                    <p:graphicImage id="image" value="#{agenteControl.imagen}" width="150" height="150" />
+                                </h:panelGrid>
+
+                            </h:panelGrid>
+
+                        </p:tab>
+
+                        <p:tab id="tabDependientes" title="Dependientes">
+                                <h:panelGrid columns="2">
+
+                                    <h:outputLabel for="nombreDependiente" value="Nombres: *"/>
+                                    <p:inputText id="nombreDependiente" value="#{agenteControl.dependiente.nomDepen}"  >
+                                        <p:ajax update="nombreDependiente" />
+                                    </p:inputText>    
+
+                                    <h:outputLabel for="apellidoDependiente" value="Apellidos: *"/>
+                                    <p:inputText id="apellidoDependiente" value="#{agenteControl.dependiente.apellDepen}" >
+                                        <p:ajax update="apellidoDependiente" />
+                                    </p:inputText>
+
+                                    <h:outputLabel for="parentescoDependiente" value="Parentesco: *"/>
+                                    <p:selectOneMenu id="parentescoDependiente" value="#{agenteControl.idparentesco}"  >    
+                                        <f:selectItem itemValue="" itemLabel="Seleccione"/>  
+                                        <f:selectItems value="#{dependienteControl.getListParametros()}" />  
+                                        <p:ajax update="parentescoDependiente" />
+                                    </p:selectOneMenu>
+                                   
+                                    <h:outputLabel for="observacionesDep" value="Observación: "/>
+                                    <p:inputTextarea id="observacionesDep" value="#{agenteControl.dependiente.observacion}" >
+                                        <p:ajax update="observacionesDep" />
+                                    </p:inputTextarea>
+                                    
+                                    <p:commandButton value="Agregar" icon="ui-icon-disk" actionListener="#{agenteControl.agregarDependiente()}" process="@this" 
+                                                     update=":growl,:agenteForm,:agenteForm:tabViewDatos:tabDependientes,:agenteForm:tabViewDatos:tablaParientes" />
+
+                                </h:panelGrid>
+                             
+                            <p:dataTable id="tablaParientes" value="#{agenteControl.listaDependientes}" var="dependiente" paginator="true" rows="4" 
+                                                    emptyMessage="No Hay Datos">
+                                       
+                                        <p:column headerText="NOMBRES">
+                                            <h:outputLabel value="#{dependiente.nomDepen}" />
+                                        </p:column>
+                                       
+                                        <p:column headerText="APELLIDOS">
+                                            <h:outputLabel value="#{dependiente.apellDepen}" />
+                                        </p:column>
+                                       
+                                       <p:column headerText="TIPO DEPENDIENTE">
+                                           <h:outputLabel value="#{dependiente.idParentesco.parametro}" />
+                                        </p:column>
+                                       
+                                       </p:dataTable>
+
+                        </p:tab>
+
+                        <p:tab id="tabBancos" title="Bancos">                          
+                                <h:panelGrid columns="2">
+                                    <p:outputLabel for="nombrebanco" value="Nombre Banco: "/>
+                                    <p:selectOneMenu id="nombrebanco" value="#{agenteControl.idnombrebanco}" >    
+                                        <f:selectItem itemValue="" itemLabel="Seleccione"/>  
+                                        <f:selectItems value="#{bancoControl.getListParametros(bancoControl.nombreBanco)}" /> 
+                                        <p:ajax update="nombrebanco" />
+                                    </p:selectOneMenu>
+
+                                    <p:outputLabel for="tipocuenta" value="Tipo de Cuenta: "/>
+                                    <p:selectOneMenu id="tipocuenta" value="#{agenteControl.idtipocuenta}" >    
+                                        <f:selectItem itemValue="" itemLabel="Seleccione"/>  
+                                        <f:selectItems value="#{bancoControl.getListParametros(bancoControl.tipoCuenta)}" />  
+                                        <p:ajax update="tipocuenta" />
+                                    </p:selectOneMenu>
+
+                                    <p:outputLabel for="numerocuenta" value="Numero de Cuenta" />
+                                    <p:inputText id="numerocuenta" value="#{agenteControl.cuentaBancos.nroCuenta}" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" >
+                                        <p:ajax update="numerocuenta" />
+                                    </p:inputText>
+                                    
+                                    <p:commandButton value="Agregar" icon="ui-icon-disk" actionListener="#{agenteControl.agregarBanco()}" process="@this" 
+                                                     update=":growl,:agenteForm,:agenteForm:tabViewDatos:tabBancos,:agenteForm:tabViewDatos:tablaBancos" />
+                                </h:panelGrid>
+                            
+                            <p:dataTable id="tablaBancos" value="#{agenteControl.listaBancos}" var="cuentaBancos" paginator="true" rows="4" 
+                                                    emptyMessage="No Hay Datos">
+                                       
+                                        <p:column headerText="BANCO">
+                                            <h:outputLabel value="#{cuentaBancos.idNombrebanco.parametro}" />
+                                        </p:column>
+                                       
+                                        <p:column headerText="TIPO DE CUENTA">
+                                            <h:outputLabel value="#{cuentaBancos.idTipocuenta.parametro}" />
+                                        </p:column>
+                                       
+                                       <p:column headerText="NUMERO DE CUENTA">
+                                           <h:outputLabel value="#{cuentaBancos.nroCuenta}" />
+                                        </p:column>
+                                       
+                                       </p:dataTable>
+                        </p:tab>
+
+                        <p:tab id="tabComunicado" title="Comunicados">                          
+                                <h:panelGrid columns="2">
+
+                                    <p:outputLabel for="documento" value="Tipo Documento: "/>
+                                    <p:selectOneMenu id="documento" value="#{agenteControl.idtipocomunicado}" >    
+                                        <f:selectItem itemValue="" itemLabel="Seleccione"/>  
+                                        <f:selectItems value="#{comunicadosControl.getListParametros()}" /> 
+                                        <p:ajax update="documento" />
+                                    </p:selectOneMenu>
+                                    
+                                    <p:outputLabel for="fechaComunicado" value="Fecha Documento" />
+                                    <p:calendar id="fechaComunicado" value="#{agenteControl.comunicados.fechaDoc}" pattern="dd-MM-yyyy" locale="ec" navigator="true" >
+                                        <p:ajax update="fechaComunicado" />
+                                    </p:calendar>
+
+                                    <p:outputLabel for="detalleComunicado" value="Detalle Documento" />
+                                    <p:inputTextarea id="detalleComunicado" value="#{agenteControl.comunicados.detalleComun}" rows="3" cols="30" >
+                                        <p:ajax update="detalleComunicado" />
+                                    </p:inputTextarea>
+                                    
+                                    <p:commandButton value="Agregar" icon="ui-icon-disk" actionListener="#{agenteControl.agregarComunicado()}" process="@this" 
+                                                     update=":growl,:agenteForm,:agenteForm:tabViewDatos:tabComunicado,:agenteForm:tabViewDatos:tablaComunicado" />
+
+                                </h:panelGrid>
+                            <p:dataTable id="tablaComunicado" value="#{agenteControl.listaComunicados}" var="comunicados" paginator="true" rows="4" 
+                                                    emptyMessage="No Hay Datos">
+                                       
+                                        <p:column headerText="TIPO DE DOCUEMNTO">
+                                            <h:outputLabel value="#{comunicados.idTipoComunicado.parametro}" />
+                                        </p:column>
+                                       
+                                        <p:column headerText="FECHA DE DOCUMENTO">
+                                            <h:outputLabel value="#{comunicados.fechaDoc}" />
+                                        </p:column>
+                                       
+                                       <p:column headerText="DETALLE DEL DOCUMENTO">
+                                           <h:outputLabel value="#{comunicados.detalleComun}" />
+                                        </p:column>
+                                       
+                                       </p:dataTable>
+                        </p:tab>
+
+                        <p:tab id="tabCursos" title="Cursos">
+                                <h:panelGrid columns="2">
+                                    <p:outputLabel for="idtipocurso" value="Tipo de Curso"/>
+                                    <p:selectOneMenu id="idtipocurso" value="#{agenteControl.idtipocurso}">
+                                        <f:selectItem itemValue="" itemLabel="Seleccione"/>
+                                        <f:selectItems value="#{cursosControl.getListParametros(cursosControl.tipocurso)}"/> 
+                                        <p:ajax update="idtipocurso"/>
+                                    </p:selectOneMenu>
+                                    
+                                    <p:outputLabel for="idlugarcurso" value="Lugar de Curso"/>
+                                    <p:selectOneMenu id="idlugarcurso" value="#{agenteControl.idlugarcurso}">
+                                        <f:selectItem itemValue="" itemLabel="Seleccione"/>
+                                        <f:selectItems value="#{cursosControl.getListParametros(cursosControl.ciudadPais)}"/> 
+                                         <p:ajax update="idlugarcurso" />
+                                    </p:selectOneMenu>
+                                    
+                                    <p:outputLabel for="fechainicio" value="Fecha de Inicio"/>
+                                    <p:calendar id="fechainicio" value="#{agenteControl.cursos.fechaCursoInicio}" pattern="dd-MM-yyyy" locale="de" navigator="true" >
+                                        <p:ajax update="fechainicio" />
+                                    </p:calendar>
+                                    
+                                    <p:outputLabel for="fechafin" value="Fecha de Fin"/>
+                                    <p:calendar id="fechafin" value="#{agenteControl.cursos.fechaCursoFin}" pattern="dd-MM-yyyy" locale="de" navigator="true" >
+                                        <p:ajax update="fechafin" />
+                                    </p:calendar>
+                                    
+                                    <p:outputLabel for="tiempocurso" value="Tiempo Curso"/>
+                                    <p:inputText id="tiempocurso" value="#{agenteControl.cursos.tiempo}" >
+                                        <p:ajax update="tiempocurso" />
+                                    </p:inputText>
+                                    
+                                    <p:outputLabel for="detalle" value="Detalle Documento" />
+                                    <p:inputText id="detalle" value="#{agenteControl.cursos.documento}">
+                                        <p:ajax update="detalle" />
+                                    </p:inputText>
+                                    
+                                    <h:outputLabel for="observacionCurso" value="Observación: "/>
+                                    <p:inputTextarea id="observacionCurso" value="#{agenteControl.cursos.observacion}" >
+                                        <p:ajax update="observacionCurso" />
+                                    </p:inputTextarea>
+
+                                    <p:commandButton value="Agregar" icon="ui-icon-disk" actionListener="#{agenteControl.agregarCurso()}" process="@this" 
+                                                     update=":growl,:agenteForm,:agenteForm:tabViewDatos:tabCursos,:agenteForm:tabViewDatos:tablaCurso" />
+
+                                </h:panelGrid>  
+                            
+                            <p:dataTable id="tablaCurso" value="#{agenteControl.listaCursos}" var="curso" paginator="true" rows="4" 
+                                                    emptyMessage="No Hay Datos">
+                                       
+                                        <p:column headerText="TIPO DE CURSO">
+                                            <h:outputLabel value="#{curso.idTipoCurso.parametro}" />
+                                        </p:column>
+                                       
+                                        <p:column headerText="LUGAR DEL CURSO">
+                                            <h:outputLabel value="#{curso.idLugarCurso.parametro}" />
+                                        </p:column>
+                                       
+                                       <p:column headerText="TIEMPO DEL CURSO">
+                                           <h:outputLabel value="#{curso.tiempo}" />
+                                        </p:column>
+                                
+                                        <p:column headerText="FECHA INICIO">
+                                            <h:outputLabel value="#{curso.fechaCursoInicio}"/>
+                                        </p:column>
+                                       
+                                       </p:dataTable>
+                        </p:tab>
+
+                        <p:tab id="tabFelicitaciones" title="Felicitaciones">
+                                <h:panelGrid columns="2">
+                                    
+                                    <p:outputLabel for="documentofelicitacion" value="Documento Felicitacion"/>
+                                    <p:inputText id="documentofelicitacion" value="#{agenteControl.felicitaciones.docFelicitacion}">
+                                        <p:ajax update="documentofelicitacion" />
+                                    </p:inputText>
+                                    
+                                    <p:outputLabel for="fechafelicitacion" value="Fecha Felicitacion"/>
+                                    <p:calendar id="fechafelicitacion" value="#{agenteControl.felicitaciones.fechaFelicitacion}" pattern="dd-MM-yyyy" locale="de" navigator="true">
+                                        <p:ajax update="fechafelicitacion" />
+                                    </p:calendar>
+                                    
+                                    <h:outputLabel for="observacionfelicitacion" value="Observación: "/>
+                                    <p:inputTextarea id="observacionfelicitacion" value="#{agenteControl.felicitaciones.detalleFelic}">
+                                        <p:ajax update="observacionfelicitacion" />
+                                    </p:inputTextarea>
+                                    
+                                    <p:commandButton value="Agregar" icon="ui-icon-disk" actionListener="#{agenteControl.agregarFelicitacion()}" process="@this" 
+                                                     update=":growl,:agenteForm,:agenteForm:tabViewDatos:tabFelicitaciones,:agenteForm:tabViewDatos:tablaFelicitacion" />
+
+                                </h:panelGrid>  
+                            
+                            <p:dataTable id="tablaFelicitacion" value="#{agenteControl.listaFelicitaciones}" var="felicitacion" paginator="true" rows="4" 
+                                                    emptyMessage="No Hay Datos">
+                                       
+                                        <p:column headerText="TIPO DOCUMENTO">
+                                            <h:outputLabel value="#{felicitacion.docFelicitacion}" />
+                                        </p:column>
+                                        
+                                        <p:column headerText="FECHA FELICITACION">
+                                            <h:outputLabel value="#{felicitacion.fechaFelicitacion}"/>
+                                        </p:column>
+                                       
+                                       </p:dataTable>
+                        </p:tab>
+                        
+                        
+                        
+                        <p:tab id="tabOperativos" title="Operativos">
+                              <h:panelGrid columns="2">
+
+                                    <h:outputLabel for="nombreOperativo" value="Nombres Operativo: "/>
+                                    <p:inputText id="nombreOperativo" value="#{agenteControl.operativos.nombreOperativo}" >
+                                        <p:ajax update="nombreOperativo" />
+                                    </p:inputText>    
+
+                                   <h:outputLabel for="ciudadOperativo" value="Lugar Operativo: "/>
+                                   <p:selectOneMenu id="ciudadOperativo" value="#{agenteControl.idciudad}"  >    
+                                        <f:selectItem itemValue="" itemLabel="Seleccione"/>  
+                                        <f:selectItems value="#{operativoControl.getListParametros()}" />  
+                                        <p:ajax update="ciudadOperativo" />
+                                    </p:selectOneMenu>
+
+                                   <p:outputLabel for="fechaOperativo" value="Fecha Operativo: "/>
+                                   <p:calendar id="fechaOperativo" value="#{agenteControl.operativos.fechaOperativo}" pattern="dd-MM-yyyy" locale="ec" navigator="true">
+                                        <p:ajax update="fechaOperativo" />
+                                    </p:calendar>
+                                   
+                                    <h:outputLabel for="ordenservicio" value="Orden de Servicio: "/>
+                                    <p:inputTextarea id="ordenservicio" value="#{agenteControl.operativos.ordServicio}"  >
+                                        <p:ajax update="ordenservicio" />
+                                    </p:inputTextarea> 
+
+                                    <p:commandButton value="Agregar" icon="ui-icon-disk" actionListener="#{agenteControl.agregarOperativos()}" process="@this" 
+                                                     update=":growl,:agenteForm,:agenteForm:tabViewDatos:tabOperativos,:agenteForm:tabViewDatos:tablaOperativo" />
+
+                                </h:panelGrid>  
+                            
+                            <p:dataTable id="tablaOperativo" value="#{agenteControl.listaOperativos}" var="operativos" paginator="true" rows="4" 
+                                                    emptyMessage="No Hay Datos">
+                                       
+                                        <p:column headerText="NOMBRE OPERATIVO">
+                                            <h:outputLabel value="#{operativos.nombreOperativo}" />
+                                        </p:column>
+                                        
+                                        <p:column headerText="LUGAR OPERATIVO">
+                                            <h:outputLabel value="#{operativos.idCiudad.parametro}"/>
+                                        </p:column>
+                                
+                                        <p:column headerText="FECHA OPERATIVO">
+                                            <h:outputLabel value="#{operativos.fechaOperativo}" />
+                                        </p:column>
+                                        
+                                        <p:column headerText="ORDEN DE SERVICIO">
+                                            <h:outputLabel value="#{operativos.ordServicio}"/>
+                                        </p:column>
+                                       
+                                       </p:dataTable>
+                        </p:tab>
+                        
+                        <p:tab id="tabPases" title="Pases">
+                                <h:panelGrid columns="2">
+
+                                    <h:outputLabel for="tipodocumentopase" value="Tipo Documento Pase: "/>
+                                    <p:selectOneMenu id="tipodocumentopase" value="#{agenteControl.idtipodocumentopases}" >    
+                                        <f:selectItem itemValue="" itemLabel="Seleccione"/>  
+                                        <f:selectItems value="#{pasesControl.getListParametros()}" />  
+                                        <p:ajax update="tipodocumentopase" />
+                                    </p:selectOneMenu>
+                                     <p:outputLabel for ="paseDocumento" value="Documento de Pase: "/>
+                                   <p:inputText id="paseDocumento" value="#{agenteControl.pases.documentoPase}">
+                                       <p:ajax update="paseDocumento"/>
+                                   </p:inputText>
+                                     
+                                   <p:outputLabel for="fechapase" value="Fecha Pase: "/>
+                                   <p:calendar id="fechapase" value="#{agenteControl.pases.fechaPase}" pattern="dd-MM-yyyy" locale="ec" navigator="true">
+                                        <p:ajax update="fechapase" />
+                                    </p:calendar>         
+                                   
+                                    <h:outputLabel for="lugarpase" value="Pase: "/>
+                                    <p:inputText id="lugarpase" value="#{agenteControl.pases.lugarPase}"     >
+                                        <p:ajax update="lugarpase" />
+                                    </p:inputText>
+
+                                    <p:commandButton value="Agregar" icon="ui-icon-disk" actionListener="#{agenteControl.agregrarPases()}" process="@this" 
+                                                     update=":growl,:agenteForm,:agenteForm:tabViewDatos:tabPases,:agenteForm:tabViewDatos:tablaPase" />
+
+                                </h:panelGrid>  
+                            
+                            <p:dataTable id="tablaPase" value="#{agenteControl.listaPases}" var="pases" paginator="true" rows="4" 
+                                                    emptyMessage="No Hay Datos">
+                                       
+                                        <p:column headerText="DOCUMENTO PASE">
+                                            <h:outputLabel value="#{pases.documentoPase}" />
+                                        </p:column>
+                                        
+                                        <p:column headerText="FECHA PASE">
+                                            <h:outputLabel value="#{pases.fechaPase}"/>
+                                        </p:column>
+                                
+                                        <p:column headerText="LUGAR DE PASE">
+                                            <h:outputLabel value="#{pases.lugarPase}"/>
+                                        </p:column>
+                                       
+                                       </p:dataTable>
+                        </p:tab> 
+                        
+                        <p:tab id="tabLicencias" title="Premios y Licencias" >
+                            <h:panelGrid columns="2">
+                                
+                                <p:outputLabel for="idtipoPermiso" value="Tipo de permiso: "/>
+                                <p:selectOneMenu id="idtipoPermiso" value="#{agenteControl.idtipopermiso}">
+                                    <f:selectItem itemValue="" itemLabel="Seleccione"/>  
+                                    <f:selectItems value="#{permisoControl.getListParametros()}"/>
+                                    <p:ajax update="idtipoPermiso"/>
+                                </p:selectOneMenu>
+                                
+                                <p:outputLabel for="docPermiso" value="Documento Permiso: "/>
+                                <p:inputText id="docPermiso" value="#{agenteControl.permisos.documentoPermiso}">
+                                        <p:ajax update="docPermiso" />
+                                </p:inputText>
+                                
+                                <p:outputLabel for="fechaPermiso" value="Fecha Permiso: "/>
+                                <p:calendar id="fechaPermiso" value="#{agenteControl.permisos.fechaPermiso}" pattern="dd-MM-yyyy" locale="ec" navigator="true">
+                                        <p:ajax update="fechaPermiso" />
+                                </p:calendar>  
+                                
+                                <h:outputLabel for="diasPermiso" value="Dias de Permiso::"/>
+                                <p:inputText id="diasPermiso" value="#{agenteControl.permisos.diasPermiso}" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" >
+                                    <p:ajax update="diasPermiso"/>
+                                </p:inputText>
+                                
+                                <h:outputLabel for="observacionPermiso" value="Observación: "/>
+                                <p:inputTextarea id="observacionPermiso" value="#{agenteControl.permisos.detallePermiso}">
+                                    <p:ajax update="observacionPermiso" />
+                                </p:inputTextarea>
+                                
+                                
+                                <p:commandButton value="Agregar" icon="ui-icon-disk" actionListener="#{agenteControl.agregarPermisos()}" process="@this" 
+                                                     update=":growl,:agenteForm,:agenteForm:tabViewDatos:tabLicencias,:agenteForm:tabViewDatos:tablaLicencia" />
+
+                                </h:panelGrid>  
+                            
+                            <p:dataTable id="tablaLicencia" value="#{agenteControl.listaLicencias}" var="permisos" paginator="true" rows="4" 
+                                                    emptyMessage="No Hay Datos">
+                                       
+                                        <p:column headerText="TIPO DE PERMISO">
+                                            <h:outputLabel value="#{permisos.idTipoPermiso.parametro}" />
+                                        </p:column>
+                                
+                                        <p:column headerText="FECHA DE PERMISO">
+                                            <h:outputLabel value="#{permisos.fechaPermiso}" />
+                                        </p:column>
+                                
+                                        <p:column headerText="DIAS DE PERMISO">
+                                            <h:outputLabel value="#{permisos.diasPermiso}" />
+                                        </p:column>
+                                        
+                                        
+                                       
+                                       </p:dataTable>
+                        </p:tab>    
+
+                    </p:tabView>
+
+                </h:form>
+            </f:view>
+        </ui:define>
+    </ui:composition>
+</html>

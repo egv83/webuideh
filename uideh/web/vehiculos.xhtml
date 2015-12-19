@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/layout/template.xhtml">
+        <ui:define name="content">
+            <f:view transient="true" >
+                <h:form id="vehiculoForm" enctype="multipart/form-data" >
+                   <p:toolbar>
+                        <f:facet name="left">
+                            <p:commandButton value="Grabar" icon="ui-icon-disk" action="#{vehiculoControl.grabar()}" ajax="true" update=":vehiculoForm,:growl" />
+                        </f:facet>
+                    </p:toolbar> 
+                    <p:tabView id="tabViewDatos">
+                         <p:tab id="tadDatos" title="Datos Vehiculo">
+
+                            <h:panelGrid columns="2">
+                                
+                                <h:outputLabel for="codigoVehiculo" value="Codigo: *" />
+                                <p:inputText id="codigoVehiculo" value="#{vehiculoControl.vehiculo.codigoVehiculo}" required="false" requiredMessage="Ingrese la cedula"  />
+
+                                <p:outputLabel for="estado" value="Estado"/>
+                                <p:selectOneMenu id="estado" value="#{vehiculoControl.estado}" required="false" >    
+                                    <f:selectItem itemValue="" itemLabel="Seleccione"/>
+                                    <f:selectItems value="#{vehiculoControl.getListParametros(vehiculoControl.estado)}"/>        
+                                </p:selectOneMenu>
+                                
+                                <p:outputLabel for="placa" value="Placa: "/>
+                                <p:inputText id="placa" value="#{vehiculoControl.vehiculo.placa}" required="false"/>
+
+                                <p:outputLabel for="motor" value="Motor: "/>
+                                <p:inputText id="motor" value="#{vehiculoControl.vehiculo.motor}" required="false"/>
+
+                                <p:outputLabel for="anio" value="Ano Fabricacion: "/>
+                                <p:calendar id="anio" value="#{vehiculoControl.vehiculo.anio}"  required="false" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" />
+
+                                <p:outputLabel for="chasis" value="Chasis: "/>
+                                <p:inputText id="chasis" value="#{vehiculoControl.vehiculo.chasis}" required="false"/>
+
+                                <p:outputLabel for="marca" value="Marca: "/>
+                                <p:inputText id="marca" value="#{vehiculoControl.vehiculo.marca}" required="false" />
+
+                                <p:outputLabel for="Tipo" value="Tipo: "/>
+                                <p:inputText id="tallaropa" value="#{vehiculoControl.vehiculo.tipo}" required="false" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" /> 
+
+                                <p:outputLabel for="tallacalzado" value="Talla de Calzado"/>
+                                <p:inputText id="tallacalzado" value="#{agenteControl.agente.calzadoAgente}" required="false" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" /> 
+
+                                <p:outputLabel for="gorra" value="Talla de Gorra"/>
+                                <p:inputText id="gorra" value="#{agenteControl.agente.gorraAgente}" required="false" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" /> 
+
+                                <p:outputLabel for="telefonoagencia" value="Telefono Agencia: " />
+                                <p:inputText id="telefonoagencia" value="#{agenteControl.agente.telefono1}" required="false" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" /> 
+
+                                <p:outputLabel for="telefonopersonal" value="Telefono Personal: "/>
+                                <p:inputText id="telefonopersonal" value="#{agenteControl.agente.telefono2}" required="false" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" />
+
+                                <p:outputLabel for="direccion" value="Direccion Domicilio: "/>
+                                <p:inputTextarea id="direccion" value="#{agenteControl.agente.direcAgente}" required="false" rows="3" cols="30" />
+
+                                <p:outputLabel />
+                                <h:panelGrid columns="2">
+                                    <p:fileUpload label="Avansado" value="#{agenteControl.file}" mode="advanced" invalidFileMessage="Tipo de archivo invalido"
+                                                  fileLimitMessage="Tatal de archivos no permitidos, solo se permite 1 archivo"
+                                                  invalidSizeMessage="Tamaño de archivo no permitido solo se permite archivos de 2MB"
+                                                  multiple="false" fileLimit="1" sizeLimit="2097152" 
+                                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                                  fileUploadListener="#{agenteControl.upload}" update="image" />
+                                    <p:graphicImage id="image" value="#{agenteControl.imagen}" width="150" height="150" />
+                                </h:panelGrid>
+
+                            </h:panelGrid>
+
+                         </p:tab>
+                    </p:tabView>
+                </h:form>       
+            </f:view>
+        </ui:define>
+    </ui:composition>
+</html>
+

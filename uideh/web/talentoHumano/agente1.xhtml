@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/layout/template.xhtml">
+        <ui:define name="content" >
+            <f:view transient="true" >
+                <h:form id="agenteForm">
+                    <p:panel header="Busqueda">
+                        <h:panelGrid columns="6">
+                            <p:outputLabel for="cedula" value="Cedula:" />
+                            <p:inputText id="cedula" value="#{agenteControl.cedula}" />
+                            <p:outputLabel for="nombres" value="Nombres:"/>
+                            <p:inputText id="nombres" value="#{agenteControl.nombres}" />
+                            <p:outputLabel for="apellidos" value="Apellidos:" />
+                            <p:inputText id="apellidos" value="#{agenteControl.apellidos}" />
+                        </h:panelGrid>
+                    </p:panel>    
+                    <p:separator />
+                    <p:commandButton value="Nuevo" icon="ui-icon-document" oncomplete="PF('agenteDialogo').show();">
+                        <p:ajax update=":agenteModalForm" listener="#{agenteControl.nuevo()}" />
+                    </p:commandButton>
+                    <p:separator />
+                    <p:dataTable id="tablaAgente" value="#{agenteControl.listadoAgentes}" var="agente" paginator="true" rows="15" 
+                                 emptyMessage="No Hay Datos">
+                        <p:column headerText="Cedula">
+                            <h:outputLabel value="#{agente.cedAgente}"/>
+                        </p:column>
+                        <p:column headerText="Grado">
+                            <h:outputLabel value="#{agente.idGrado.parametro}" />
+                        </p:column>
+                        <p:column headerText="Nombres">
+                            <h:outputLabel value="#{agente.nomAgente}" />
+                        </p:column>
+                        <p:column headerText="Apellido">
+                            <h:outputLabel value="#{agente.apellAgente}" />
+                        </p:column>
+                        <p:column headerText="Estado">
+                            <h:outputLabel value="#{agente.statusAgente.parametro}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <p:dialog id="dialogAgente" widgetVar="agenteDialogo" header="AGENTE" showEffect="fade" modal="false" resizable="false" >
+                    <h:form id="agenteModalForm">
+                        <p:inputText required="true" value="#{agenteControl.cedulaAgente}" />
+                        <p:commandButton value="Grabar" action="#{agenteControl.grabar()}" update=":agenteModalForm,:agenteForm:tablaAgente,:growl" />
+                    </h:form>
+                </p:dialog>
+            </f:view>
+        </ui:define>
+    </ui:composition>
+</html>
+

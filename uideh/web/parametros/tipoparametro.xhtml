@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/layout/template.xhtml">
+        <ui:define name="content" >
+            <f:view transient="true" >
+                <h2 align="center" style="font-size: x-large">TIPO PARAMETRO</h2>     
+                <h:form id="tipoparametroForm">
+                    <p:commandButton value="Nuevo" icon="ui-icon-document" oncomplete="PF('tipoparametroDialogo').show();">
+                        <p:ajax update=":tipoparametroModalForm" listener="#{tipoParametroControl.nuevo()}" />
+                    </p:commandButton>
+                    <p:separator/>
+                    <p:dataTable id="tablaTipoParametro" value="#{tipoParametroControl.listTipoParametro}" var="tipoparametro" paginator="true" rows="15" 
+                                 emptyMessage="No Hay Datos">
+                        <p:column headerText="Tipo Parametro">
+                            <h:outputLabel value="#{tipoparametro.tipoParametro}" />
+                        </p:column> 
+                    </p:dataTable>
+                </h:form>
+
+                <p:dialog id="dialogTipoParametro" widgetVar="tipoparametroDialogo" header="TIPO PARAMETRO" showEffect="fade" modal="false" resizable="false" >
+                    <h:form id="tipoparametroModalForm">           
+                        <h:panelGrid columns="2">
+                            <p:outputLabel for="tipoparamDescrip" value="Tipo Parametro" />
+                            <p:inputText id="tipoparamDescrip" value="#{tipoParametroControl.tipoParametro.tipoParametro}"  />
+                        </h:panelGrid>
+                        <p:separator />
+                        <p:commandButton value="Grabar" icon="ui-icon-disk" action="#{tipoParametroControl.grabar()}" update=":tipoparametroModalForm,:tipoparametroForm:tablaTipoParametro,:growl" />
+                    </h:form> 
+                </p:dialog>
+            </f:view>
+        </ui:define>
+    </ui:composition>
+</html>
+

@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/layout/template.xhtml">
+        <ui:define name="content" >
+            <f:view transient="true" >
+                <h:form id="menuRoles" >
+
+                    <h2 align="center" style="font-size: x-large">ASIGNAR MENÚ POR ROL</h2>                    
+
+                    <p:dataTable id="tablaMenuRol" value="#{userRolMenuControl.listaUserRolMenu}" var="userRolMenu" rows="15" paginator="true" paginatorPosition="bottom" emptyMessage="No hay datos"
+                                 selectionMode="single" rowKey="#{userRolMenu.id}" selection="#{userRolMenuControl.userRolMenuSeleccionado}" >
+                        
+                        <p:ajax event="rowSelect" listener="#{userRolMenuControl.editar}" update=":formUserRolMenu,:growl" oncomplete="PF('userRolMenuDialog').show()" />
+                        
+                        <p:columnGroup type="header">
+                            <p:row>
+                                <p:column colspan="1" />
+                                <p:column colspan="2" headerText="Menu" />
+                            </p:row>
+                            <p:row>
+                                <p:column headerText="Rol" sortBy="userRol.rol.parametro"/>
+                                <p:column headerText="Descripción" sortBy="menu.descripcion" />
+                                <p:column headerText="Link" sortBy="menu.url" />
+                            </p:row>
+                        </p:columnGroup> 
+                        <p:column >
+                            <h:outputText value="#{userRolMenu.rol.parametro}" />
+                        </p:column >
+                        <p:column >
+                            <h:outputText value="#{userRolMenu.menu.descripcion}" />
+                        </p:column >
+                        <p:column >
+                            <h:outputText value="#{userRolMenu.menu.url}" />
+                        </p:column >
+                    </p:dataTable>
+
+                    <p:commandButton id="btNuevo" value="Nuevo" icon="ui-icon-document" onclick="PF('userRolMenuDialog').show();" >
+                        <p:ajax update=":formUserRolMenu" listener="#{userRolMenuControl.nuevo()}" />
+                    </p:commandButton>
+                </h:form>
+
+                <p:dialog id="idUserRolMenuDialog" widgetVar="userRolMenuDialog" header="Roles Menú" showEffect="fade" modal="true" resizable="false" >
+                    <h:form id="formUserRolMenu" >
+                        <p:panel>
+                            <f:facet name="header">Roles</f:facet>
+                            
+                                <p:outputLabel for="idRoles" value="Roles" />
+                                <p:spacer />
+                                <p:selectOneMenu id="idRoles" value="#{userRolMenuControl.idRol}" required="true" requiredMessage="Obligatorio">
+                                    <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                    <f:selectItems value="#{usuariosControl.roles}" />
+                                </p:selectOneMenu>
+                                <p:message for="idRoles"/>
+                            
+                        </p:panel>
+                        <p:panel>
+                            <f:facet name="header">Menú</f:facet>
+                            <p:outputLabel for="idMenus" value="Menú" />
+                            <p:selectOneListbox id="idMenus" value="#{userRolMenuControl.idMenu}" required="true" requiredMessage="Obligatorio" >
+                                <f:selectItems value="#{userRolMenuControl.listaMenuLink}" />
+                            </p:selectOneListbox>
+                            <p:message for="idMenus" />
+                        </p:panel>
+
+                        <p:commandButton value="Guardar" action="#{userRolMenuControl.grabar()}" icon="ui-icon-disk" update=":formUserRolMenu,:menuRoles:tablaMenuRol,:growl" 
+                                         rendered="#{userRolMenuControl.opNuevo}" />
+                        <p:commandButton value="Guardar" action="#{userRolMenuControl.actualizar()}" icon="ui-icon-disk" update=":formUserRolMenu,:menuRoles:tablaMenuRol,:growl" rendered="#{!userRolMenuControl.opNuevo}" />
+                        <p:spacer />
+                        <p:commandButton value="Eliminar" action="#{userRolMenuControl.eliminar()}" icon="ui-icon-trash" update=":formUserRolMenu,:menuRoles:tablaMenuRol,:growl" rendered="#{!userRolMenuControl.opNuevo}" />
+                        
+                    </h:form>
+                </p:dialog>
+
+            </f:view>
+        </ui:define>
+    </ui:composition>
+</html>

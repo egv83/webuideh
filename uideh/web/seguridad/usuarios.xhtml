@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/layout/template.xhtml">
+        <ui:define name="content" >
+            <f:view transient="true" >
+                <h:form id="usuarios">
+                    
+                    <h2 align="center" style="font-size: x-large">AGREGAR USUARIOS</h2> 
+                    
+                    <p:panel header="Usuarios" >
+                        <h:panelGrid id="textos" columns="2">
+                            <h:outputLabel for="nombres" value="Nombres"/>
+                            <p:inputText id="nombres" value="#{usuariosControl.usuarios.nombres}" />
+                            
+                            <h:outputLabel for="apellidos" value="Apellidos" />
+                            <p:inputText id="apellidos" value="#{usuariosControl.usuarios.apellidos}" />
+                            
+                        </h:panelGrid>
+                        <p:separator />
+                        <p:commandButton id="btBuscar" value="Buscar" icon="ui-icon-search" action="#{usuariosControl.buscar()}" update="tablaUsuarios,textos" />
+                        <p:commandButton id="btNuevo" value="Nuevo" icon="ui-icon-document" onclick="PF('usuarioDialog').show();" >
+                            <p:ajax update=":usuarioForm" listener="#{usuariosControl.nuevo()}" />
+                        </p:commandButton>
+                        <p:separator />
+                        <p:dataTable id="tablaUsuarios" value="#{usuariosControl.listadoUsuarios}" var="usuario" rows="15" paginator="true" paginatorPosition="bottom"
+                                     sortMode="multiple" rowKey="#{usuario.id}" selectionMode="single" selection="#{usuariosControl.usuario}" emptyMessage="No hay datos" >
+                            
+                            <p:ajax event="rowSelect" listener="#{usuariosControl.editar}" update=":usuarioForm" oncomplete="PF('usuarioDialog').show()" />
+                            
+                            <p:column headerText="Nombres" sortBy="nombres" >
+                                <h:outputText value="#{usuario.nombres}" />
+                            </p:column>
+                            <p:column headerText="Apellidos" sortBy="apellidos">
+                                <h:outputText value="#{usuario.apellidos}" />
+                            </p:column>
+                            <p:column headerText="Estado" sortBy="estado.parametro" >
+                                <h:outputText value="#{usuario.estado.parametro}" />
+                            </p:column>          
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
+                
+                <p:dialog id="idDialogUsuario" header="Usuario" showEffect="fade" widgetVar="usuarioDialog" modal="false" resizable="false">
+                    <h:form id="usuarioForm">
+                        <h:panelGrid columns="3">
+                            <h:outputLabel for="nombres" value="Nombres"/>
+                            <p:inputText id="nombres" value="#{usuariosControl.nombres}" required="true" requiredMessage="Obligatorio" style="text-transform: uppercase" />
+                            <p:message for="nombres" />
+                            
+                            <h:outputLabel for="apellidos" value="Apellidos"/>
+                            <p:inputText id="apellidos" value="#{usuariosControl.apellidos}" required="true" requiredMessage="Obligatorio" style="text-transform: uppercase" />
+                            <p:message for="apellidos" />
+                            
+                            <h:outputLabel for="selectRol" value="Rol"/>
+                            <p:selectOneMenu id="selectRol" value="#{usuariosControl.idRol}" required="true" requiredMessage="Obligatorio" >
+                                <f:selectItem itemLabel="Seleccione" />
+                                <f:selectItems value="#{usuariosControl.roles}" />
+                            </p:selectOneMenu>                                
+                            <p:message for="selectRol" />
+                            
+                            <h:outputLabel for="usuario" value="Usuario"/>
+                            <p:inputText id="usuario" value="#{usuariosControl.user}" required="true" requiredMessage="Obligatorio" />
+                            <p:message for="usuario" />
+                            
+                            <h:outputLabel for="claveActual" value="Clave Actual" rendered="#{!usuariosControl.opcion}"/>
+                            <p:password id="claveActual" value="#{usuariosControl.verificarClave}" required="false" requiredMessage="Obligatorio" rendered="#{!usuariosControl.opcion}" />
+                            <p:message for="claveActual" rendered="#{!usuariosControl.opcion}" />
+                            
+                            <h:outputLabel for="clave" value="Clave" rendered="#{usuariosControl.opcion}"/>
+                            <p:password id="clave" value="#{usuariosControl.clave}" rendered="#{usuariosControl.opcion}" required="true" match="clave2" validatorMessage="La clave tiene q ser igual" requiredMessage="Obligatorio" />
+                            <p:message for="clave" rendered="#{usuariosControl.opcion}" />
+                                                        
+                            <h:outputLabel for="clave2" value="Verificar Clave" rendered="#{usuariosControl.opcion}"/>
+                            <p:password id="clave2" value="#{usuariosControl.clave}" rendered="#{usuariosControl.opcion}" required="true" requiredMessage="Obligatorio" />
+                            <p:message for="clave2" rendered="#{usuariosControl.opcion}" />
+                            
+                            <h:outputLabel id="idLblClaveEdit" for="claveEdit" value="Clave Edit" rendered="#{!usuariosControl.opcion}"/>
+                            <p:password id="claveEdit" value="#{usuariosControl.clave}" rendered="#{!usuariosControl.opcion}"  validatorMessage="La clave tiene q ser igual" requiredMessage="Obligatorio" />
+                            <p:message id="idMsgClaveEdit" for="claveEdit" rendered="#{!usuariosControl.opcion}" />
+                            
+                            <h:outputLabel id="idLblClaveEdit2" for="claveEdit2" value="Verificar Clave Edit" rendered="#{!usuariosControl.opcion}"/>
+                            <p:password id="claveEdit2" value="#{usuariosControl.clave}" rendered="#{!usuariosControl.opcion}" requiredMessage="Obligatorio" />
+                            <p:message id="idMsgClaveEdit2" for="claveEdit2" rendered="#{!usuariosControl.opcion}" />
+                            
+                            <h:outputLabel for="activo" value="Activo"/>
+                            <p:selectBooleanCheckbox  id="activo" value="#{usuariosControl.checkEstado}" required="true" requiredMessage="Obligatorio" />
+                            <p:message for="activo" />
+                            
+                        </h:panelGrid>
+                        <p:commandButton value="Grabar" icon="ui-icon-disk" action="#{usuariosControl.guardar()}"  update=":usuarioForm,:usuarios:tablaUsuarios,:growl" rendered="#{usuariosControl.opcion}" />
+                        <p:commandButton value="Grabar" icon="ui-icon-disk" action="#{usuariosControl.actualizar()}" update="usuarioForm,:usuarios:tablaUsuarios,:growl" rendered="#{!usuariosControl.opcion}" />
+                        <p:spacer />
+                        <p:commandButton value="Eliminar" icon="ui-icon-trash" action="#{usuariosControl.eliminarUsuario()}" update="usuarioForm,:usuarios:tablaUsuarios,:growl" rendered="#{!usuariosControl.opcion}" />
+                    </h:form>
+                </p:dialog>
+                
+            </f:view>
+        </ui:define>
+    </ui:composition>
+</html>
+

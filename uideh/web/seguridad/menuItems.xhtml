@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/layout/template.xhtml">
+        <ui:define name="content" >
+            <f:view transient="true" >
+                <h:form id="menu" >
+                    
+                    <h2 align="center" style="font-size: x-large">ASIGNAR MENÚ</h2> 
+                    
+                    <p:panel header="MENU ITEMS" >
+                        <p:treeTable id="idTreeMenu" value="#{menuItemControl.arbolMenu}" var="menu" >
+                            <p:column headerText="Descripción">
+                                <h:outputText value="#{menu.descripcion}" />
+                            </p:column>
+                            <p:column headerText="Url">
+                                <h:outputText value="#{menu.url}" />
+                            </p:column>
+                            <p:column style="width:24px">
+                                <p:commandLink id="idCommandLink" oncomplete="PF('menuItemDialog').show()" title="View Detail" styleClass="ui-icon ui-icon-pencil"  >
+                                    <p:ajax  listener="#{menuItemControl.menuSeleccionado(menu)}" update=":menuItemPanel" />
+                                </p:commandLink>
+                            </p:column >
+                            <p:column style="width:24px">
+                                <p:commandLink id="idComandLinkEliminar" title="Eliminar" styleClass="ui-icon ui-icon-trash" >
+                                    <p:ajax update=":menu" listener="#{menuItemControl.eliminar(menu)}" />
+                                </p:commandLink>
+                            </p:column>
+                        </p:treeTable>
+                    </p:panel>
+                    <p:separator />
+
+                    <p:commandButton id="btNuevo" value="Nuevo" icon="ui-icon-document" onclick="PF('menuItemDialog').show();" >
+                        <p:ajax listener="#{menuItemControl.nuevo()}" update=":menuItemPanel" />
+                    </p:commandButton>
+
+                </h:form>
+
+                <p:dialog id="dialog" header="Menu" showEffect="fade" widgetVar="menuItemDialog" modal="false" resizable="false">
+                    <h:form id="menuItemPanel">
+                        <h:panelGrid columns="2" >
+                            <h:outputLabel for="idMenu" value="Menu" />
+                            <h:panelGrid columns="5" >
+                                <h:panelGroup>
+                                    <h:outputLabel for="idMenu" value="Menu" />
+                                    <p:selectOneListbox id="idMenu" value="#{menuItemControl.seleccionMenuItems.idPadre}"  >
+                                        <f:selectItem itemLabel="Ninguno" itemValue="" />
+                                        <f:selectItems value="#{menuItemControl.listaMenuPadre}" />
+                                        <p:ajax update="menuItemPanel,idSubMenuLv1" listener="#{menuItemControl.llenarListaSubMenu(menuItemControl.seleccionMenuItems.idPadre)}" />
+                                        <p:ajax update="menuItemPanel,idLink" listener="#{menuItemControl.llenarMenuLink(menuItemControl.seleccionMenuItems.idPadre)}" />
+                                    </p:selectOneListbox>
+                                </h:panelGroup>
+                                
+                                <h:panelGroup>
+                                    <h:outputLabel for="idSubMenuLv1" value="Sub Menu" rendered="#{menuItemControl.listaSubMenu.size()>0}" />
+                                    <p:selectOneListbox id="idSubMenuLv1" value="#{menuItemControl.seleccionMenuItems.idPadre}" rendered="#{menuItemControl.listaSubMenu.size()>0}" >
+                                        <f:selectItems value="#{menuItemControl.listaSubMenu}" />
+                                        <p:ajax update="idSubMenuLv1" />
+                                        <p:ajax update="menuItemPanel,idLink" listener="#{menuItemControl.llenarMenuLink(menuItemControl.seleccionMenuItems.idPadre)}" />
+                                    </p:selectOneListbox>
+                                </h:panelGroup>
+                                
+                                <h:panelGroup>
+                                    <h:outputLabel for="idLink" value="Link" rendered="#{menuItemControl.listaMenuLink.size()>0}" />
+                                    <p:selectOneListbox id="idLink" value="#{menuItemControl.seleccionMenuItems.idPadre}" rendered="#{menuItemControl.listaMenuLink.size()>0}">
+                                        <f:selectItems value="#{menuItemControl.listaMenuLink}" />
+                                        <p:ajax update="idLink" />
+                                        <p:ajax update="menuItemPanel,idLink" />
+                                    </p:selectOneListbox>
+                                </h:panelGroup>
+                            </h:panelGrid>
+
+                            <h:outputLabel for="descripcion" value="Descripción"/>
+                            <h:panelGrid columns="2">
+                                <p:inputText id="descripcion" value="#{menuItemControl.seleccionMenuItems.descripcion}"
+                                             required="true" requiredMessage="Obligatorio" style="text-transform: uppercase" >
+                                    <p:ajax update="descripcion" />
+                                </p:inputText>
+                                <p:message for="descripcion" />
+                            </h:panelGrid>
+                            <h:outputLabel for="url" value="Url"/>
+                            <p:inputText id="url" value="#{menuItemControl.seleccionMenuItems.url}" >
+                                <p:ajax update="url" />
+                            </p:inputText>
+                        </h:panelGrid>
+                        <p:commandButton id="idBtGuardar" icon="ui-icon ui-icon-disk" value="Guardar" rendered="#{menuItemControl.btNuevo}" 
+                                         actionListener="#{menuItemControl.guardar()}" process="@this" update="menuItemPanel,:menu:idTreeMenu,:growl"  
+                                         />
+
+                        <p:commandButton id="idBtActualizar" icon="ui-icon ui-icon-disk" value="Actualizar" rendered="#{menuItemControl.btEdit}" 
+                                         action="#{menuItemControl.actualizar()}" process="@this" update="menuItemPanel,:menu:idTreeMenu,:growl" />
+                    </h:form>
+
+                </p:dialog>
+
+            </f:view>
+        </ui:define>
+    </ui:composition>
+</html>
+

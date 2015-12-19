@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/layout/template.xhtml">
+        <ui:define name="content" >
+            <f:view transient="true" >
+                <h:form id="parametroForm">
+                    <h2 align="center" style="font-size: x-large">PARAMETROS</h2>
+                    <p:commandButton value="Nuevo" icon="ui-icon-document" oncomplete="PF('parametrosDialog').show();" >
+                        <p:ajax update=":parametroModalForm" listener="#{parametrosControl.nuevo()}"/>
+                    </p:commandButton>
+                    <p:dataTable id="tablaParametros" value="#{parametrosControl.listaParametros}" var="parametros" paginator="true" rows="15"
+                                 emptyMessage="No hay Datos" >
+                    
+                        <p:column headerText="Tipo Parametro">
+                            <h:outputLabel value="#{parametros.idTipoParametro.tipoParametro}" />
+                        </p:column>
+                        <p:column headerText="Parametro">
+                            <h:outputLabel value="#{parametros.parametro}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                
+                <p:dialog id="parametrosDialogo" widgetVar="parametrosDialog" resizable="false">
+                    <h:form id="parametroModalForm">
+                        <h:panelGrid columns="2">
+                            <p:outputLabel for="tipoParam" value="Tipo Parametro"/>
+                            <p:selectOneMenu id="tipoParam" value="#{parametrosControl.idTipoParametro}" required="true">
+                                <f:selectItem itemValue="" itemLabel="Seleccione"/>
+                                <f:selectItems value="#{parametrosControl.listTipoParametro}" />
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel for="parametro" value="Parametro"/>
+                            <p:inputText id="parametro" value="${parametrosControl.parametro}" required="true" />
+                        </h:panelGrid>
+                        <p:commandButton value="Grabar" action="#{parametrosControl.grabar()}" update=":parametroModalForm,:parametroForm:tablaParametros,:growl "/>                        
+                    </h:form>
+                </p:dialog>
+                
+            </f:view>
+        </ui:define>
+    </ui:composition>    
+</html>
+

@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/layout/template.xhtml">
+        <ui:define name="content" >
+            <f:view transient="true" >
+                <h:form id="menuUserForm">
+                    <h2 align="center" style="font-size: x-large">ASIGNAR MENÚ A USUARIO</h2>
+
+                    <p:dataTable id="idTabalaMenuUsuario" value="#{usuarioMenuControl.listaUsuarioMenu}" var="menuUserTabla" paginator="true" rows="15" paginatorPosition="bottom" emptyMessage="No hay registros" 
+                                 selectionMode="single" rowKey="#{menuUserTabla.id}" selection="#{usuarioMenuControl.usuarioMenu}">
+                        <p:ajax event="rowSelect" update=":menuUserDialogFrm,:growl" listener="#{usuarioMenuControl.editar}" oncomplete="PF('menuUsuarioDialog').show()" />
+                        <p:columnGroup type="header">
+                            <p:row>
+                                <p:column colspan="2" headerText="Usuario" />
+                                <p:column colspan="2" headerText="Menú" />
+                            </p:row>
+                            <p:row>
+                                <p:column headerText="Nombres" sortBy="usuario.nombres" />
+                                <p:column headerText="Apellidos" sortBy="usuario.apellidos" />
+                                <p:column headerText="Descripción" sortBy="menu.descripcion" />
+                                <p:column headerText="Link" sortBy="menu.url" />
+                            </p:row>
+                        </p:columnGroup>
+
+                        <p:column headerText="Nombres">
+                            <h:outputText value="#{menuUserTabla.usuario.nombres}" />
+                        </p:column>
+                        <p:column headerText="Apellidos">
+                            <h:outputText value="#{menuUserTabla.usuario.apellidos}" />
+                        </p:column>
+                        <p:column headerText="Descripción">
+                            <h:outputText value="#{menuUserTabla.menu.descripcion}" />
+                        </p:column>
+                        <p:column headerText="Link">
+                            <h:outputText value="#{menuUserTabla.menu.url}" />
+                        </p:column>
+                    </p:dataTable>
+
+                    <p:commandButton id="btNuevo" value="Nuevo" icon="ui-icon-document" onclick="PF('menuUsuarioDialog').show();" >
+                        <p:ajax update=":menuUserDialogFrm" listener="#{usuarioMenuControl.nuevo()}" />
+                    </p:commandButton>
+
+                </h:form>
+
+                <p:dialog id="idMenuUsuarioDialog" widgetVar="menuUsuarioDialog" header="Menú Usuarios" showEffect="fade" modal="true" resizable="false" >
+                    <h:form id="menuUserDialogFrm">
+                        <p:panel>
+                            <f:facet name="header">Usuarios</f:facet>
+                            <p:panelGrid columns="1">
+                                <p:inputText id="txtNombre" value="#{usuarioMenuControl.userNombres}" 
+                                             onclick="PF('userModal').show();" required="true" requiredMessage="Obligatorio" size="50" />
+                                <p:message for="txtNombre" />
+                                <p:inputText id="txtApellido" value="#{usuarioMenuControl.userApellido}" 
+                                             onclick="PF('userModal').show();" required="true" requiredMessage="Obligatorio" size="50" />
+                                <p:message for="txtApellido" />
+                            </p:panelGrid>
+                        </p:panel>
+                        <p:panel>
+                            <f:facet name="header">Menú</f:facet>
+                            <p:outputLabel for="idMenus" value="Menú" />
+                            <p:selectOneListbox id="idMenus" value="#{usuarioMenuControl.idMenu}"  required="true" requiredMessage="Obligatorio" >
+                                <f:selectItems value="#{userRolMenuControl.listaMenuLink}" />
+                                <p:ajax update="idMenus" />
+                            </p:selectOneListbox>
+                            <p:message for="idMenus" />
+                        </p:panel>
+                        <p:commandButton value="Grabar" icon="ui-icon-disk" action="#{usuarioMenuControl.grabar()}" process="@this,txtNombre,txtApellido" rendered="#{usuarioMenuControl.opcionNuevo}" update=":menuUserDialogFrm,:menuUserForm:idTabalaMenuUsuario,:growl"/>
+                        <p:commandButton value="Grabar" icon="ui-icon-disk" action="#{usuarioMenuControl.actualizar()}" rendered="#{!usuarioMenuControl.opcionNuevo}" update=":menuUserDialogFrm,:menuUserForm:idTabalaMenuUsuario,:growl"/>
+                        <p:spacer />
+                        <p:commandButton value="Eliminar" icon="ui-icon-disk" action="#{usuarioMenuControl.eliminar()}" rendered="#{!usuarioMenuControl.opcionNuevo}" update=":menuUserDialogFrm,:menuUserForm:idTabalaMenuUsuario,:growl"/>
+                    </h:form>
+                </p:dialog>
+
+                <p:dialog id="idUserModal" widgetVar="userModal" header="Usuarios" showEffect="fade" modal="true" resizable="false" >
+                    <h:form id="usersForm">
+                        <p:dataTable value="#{usuariosControl.listadoUsuarios}" var="usuario" rows="15" paginator="true" paginatorPosition="bottom" emptyMessage="No hay datos"
+                                     selectionMode="single" rowKey="#{usuario.id}" selection="#{usuarioMenuControl.usuario}">
+
+                            <p:ajax event="rowSelect" update=":menuUserDialogFrm" listener="#{usuarioMenuControl.asignarSeleccionado}" oncomplete="PF('userModal').hide();" />
+
+                            <p:column headerText="Nombres">
+                                <h:outputText value="#{usuario.nombres}" />
+                            </p:column>
+                            <p:column headerText="Apellidos">
+                                <h:outputText value="#{usuario.apellidos}" />
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </p:dialog>
+
+            </f:view>
+        </ui:define>
+    </ui:composition>
+</html>
+
