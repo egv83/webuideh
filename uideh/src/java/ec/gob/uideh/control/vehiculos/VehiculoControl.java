@@ -134,84 +134,12 @@ public class VehiculoControl extends Comun implements Serializable{
         this.parametroDao = parametroDao;
     }
 
-    public VehiculosDao getVehiculosDao() {
-        return vehiculosDao;
-    }
-
-    public void setVehiculosDao(VehiculosDao vehiculosDao) {
-        this.vehiculosDao = vehiculosDao;
-    }
-
     public Vehiculo getVehiculo() {
         return vehiculo;
     }
 
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
-    }
-
-    public String getCodigoVehiculo() {
-        return codigoVehiculo;
-    }
-
-    public void setCodigoVehiculo(String codigoVehiculo) {
-        this.codigoVehiculo = codigoVehiculo;
-    }
-
-    public String getPlaca() {
-        return placa;
-    }
-
-    public void setPlaca(String placa) {
-        this.placa = placa;
-    }
-
-    public String getMotor() {
-        return motor;
-    }
-
-    public void setMotor(String motor) {
-        this.motor = motor;
-    }
-
-    public String getChasis() {
-        return chasis;
-    }
-
-    public void setChasis(String chasis) {
-        this.chasis = chasis;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getUnidadServicio() {
-        return unidadServicio;
-    }
-
-    public void setUnidadServicio(String unidadServicio) {
-        this.unidadServicio = unidadServicio;
     }
 
     public Long getModelo() {
@@ -230,15 +158,6 @@ public class VehiculoControl extends Comun implements Serializable{
         this.cilindraje = cilindraje;
     }
 
-
-    public Long getAnio() {
-        return anio;
-    }
-
-    public void setAnio(Long anio) {
-        this.anio = anio;
-    }
-
     public Long getEstado() {
         return estado;
     }
@@ -246,7 +165,7 @@ public class VehiculoControl extends Comun implements Serializable{
     public void setEstado(Long estado) {
         this.estado = estado;
     }
-
+    
     public static Long getMODELO_VEHICULO() {
         return MODELO_VEHICULO;
     }

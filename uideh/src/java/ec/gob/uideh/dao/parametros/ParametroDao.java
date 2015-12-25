@@ -65,6 +65,7 @@ public class ParametroDao {
         consulta.append("ORDER BY parametros.parametro ");
         Query query = entityManager.createQuery(consulta.toString());
         query.setParameter(1, idTipoParam);
+        System.out.println("TAMAÑO LISTA PARAMETROS: "+query.getResultList().size());
         if(query.getResultList()!= null && !query.getResultList().isEmpty()){
             return query.getResultList();
         }

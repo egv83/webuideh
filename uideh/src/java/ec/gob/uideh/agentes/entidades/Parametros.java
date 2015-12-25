@@ -5,7 +5,9 @@
  */
 package ec.gob.uideh.agentes.entidades;
 
+import ec.gob.uideh.fuentes.entidades.Casos;
 import ec.gob.uideh.menu.entidades.UserRolMenu;
+import ec.gob.uideh.menu.entidades.Usuarios;
 import ec.gob.uideh.menu.entidades.UsuariosRoles;
 import ec.gob.uideh.vehiculos.entidades.Custodio;
 import ec.gob.uideh.vehiculos.entidades.Historialvehiculo;
@@ -40,6 +42,32 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Parametros.findById", query = "SELECT p FROM Parametros p WHERE p.id = :id"),
     @NamedQuery(name = "Parametros.findByParametro", query = "SELECT p FROM Parametros p WHERE p.parametro = :parametro")})
 public class Parametros implements Serializable {
+    @OneToMany(mappedBy = "estado")
+    private Collection<Usuarios> usuariosCollection;
+    @OneToMany(mappedBy = "ubicacionId")
+    private Collection<Casos> casosCollection;
+    @OneToMany(mappedBy = "idAgencia")
+    private Collection<Agente> agenteCollection;
+    @OneToMany(mappedBy = "idEstacivil")
+    private Collection<Agente> agenteCollection1;
+    @OneToMany(mappedBy = "statusAgente")
+    private Collection<Agente> agenteCollection2;
+    @OneToMany(mappedBy = "idGrado")
+    private Collection<Agente> agenteCollection3;
+    @OneToMany(mappedBy = "idNiveleduc")
+    private Collection<Agente> agenteCollection4;
+    @OneToMany(mappedBy = "idServicio")
+    private Collection<Agente> agenteCollection5;
+    @OneToMany(mappedBy = "idSexo")
+    private Collection<Agente> agenteCollection6;
+    @OneToMany(mappedBy = "idTiposangre")
+    private Collection<Agente> agenteCollection7;
+    @OneToMany(mappedBy = "idTituloUniv")
+    private Collection<Agente> agenteCollection8;
+    @OneToMany(mappedBy = "idDepartamento")
+    private Collection<Agente> agenteCollection9;
+    @OneToMany(mappedBy = "idLicenCond")
+    private Collection<Agente> agenteCollection10;
     @OneToMany(mappedBy = "tipoMantenimiento")
     private Collection<Historialvehiculo> historialvehiculoCollection;
     @OneToMany(mappedBy = "cilindrajeId")
@@ -207,5 +235,122 @@ public class Parametros implements Serializable {
 
     public void setUserRolMenuCollection(Collection<UserRolMenu> userRolMenuCollection) {
         this.userRolMenuCollection = userRolMenuCollection;
+    }
+
+    @XmlTransient
+    public Collection<Agente> getAgenteCollection() {
+        return agenteCollection;
+    }
+
+    public void setAgenteCollection(Collection<Agente> agenteCollection) {
+        this.agenteCollection = agenteCollection;
+    }
+
+    @XmlTransient
+    public Collection<Agente> getAgenteCollection1() {
+        return agenteCollection1;
+    }
+
+    public void setAgenteCollection1(Collection<Agente> agenteCollection1) {
+        this.agenteCollection1 = agenteCollection1;
+    }
+
+    @XmlTransient
+    public Collection<Agente> getAgenteCollection2() {
+        return agenteCollection2;
+    }
+
+    public void setAgenteCollection2(Collection<Agente> agenteCollection2) {
+        this.agenteCollection2 = agenteCollection2;
+    }
+
+    @XmlTransient
+    public Collection<Agente> getAgenteCollection3() {
+        return agenteCollection3;
+    }
+
+    public void setAgenteCollection3(Collection<Agente> agenteCollection3) {
+        this.agenteCollection3 = agenteCollection3;
+    }
+
+    @XmlTransient
+    public Collection<Agente> getAgenteCollection4() {
+        return agenteCollection4;
+    }
+
+    public void setAgenteCollection4(Collection<Agente> agenteCollection4) {
+        this.agenteCollection4 = agenteCollection4;
+    }
+
+    @XmlTransient
+    public Collection<Agente> getAgenteCollection5() {
+        return agenteCollection5;
+    }
+
+    public void setAgenteCollection5(Collection<Agente> agenteCollection5) {
+        this.agenteCollection5 = agenteCollection5;
+    }
+
+    @XmlTransient
+    public Collection<Agente> getAgenteCollection6() {
+        return agenteCollection6;
+    }
+
+    public void setAgenteCollection6(Collection<Agente> agenteCollection6) {
+        this.agenteCollection6 = agenteCollection6;
+    }
+
+    @XmlTransient
+    public Collection<Agente> getAgenteCollection7() {
+        return agenteCollection7;
+    }
+
+    public void setAgenteCollection7(Collection<Agente> agenteCollection7) {
+        this.agenteCollection7 = agenteCollection7;
+    }
+
+    @XmlTransient
+    public Collection<Agente> getAgenteCollection8() {
+        return agenteCollection8;
+    }
+
+    public void setAgenteCollection8(Collection<Agente> agenteCollection8) {
+        this.agenteCollection8 = agenteCollection8;
+    }
+
+    @XmlTransient
+    public Collection<Agente> getAgenteCollection9() {
+        return agenteCollection9;
+    }
+
+    public void setAgenteCollection9(Collection<Agente> agenteCollection9) {
+        this.agenteCollection9 = agenteCollection9;
+    }
+
+    @XmlTransient
+    public Collection<Agente> getAgenteCollection10() {
+        return agenteCollection10;
+    }
+
+    public void setAgenteCollection10(Collection<Agente> agenteCollection10) {
+        this.agenteCollection10 = agenteCollection10;
+    }
+
+    @XmlTransient
+    public Collection<Casos> getCasosCollection() {
+        return casosCollection;
+    }
+
+    public void setCasosCollection(Collection<Casos> casosCollection) {
+        this.casosCollection = casosCollection;
+    }
+
+    @XmlTransient
+    public Collection<Usuarios> getUsuariosCollection() {
+        return usuariosCollection;
+    }
+
+    public void setUsuariosCollection(Collection<Usuarios> usuariosCollection) {
+        this.usuariosCollection = usuariosCollection;
     }
 }

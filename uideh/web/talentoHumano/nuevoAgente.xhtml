@@ -12,7 +12,7 @@
                 <h:form id="agenteForm" enctype="multipart/form-data" >
                     <p:toolbar>
                         <f:facet name="left">
-                            <p:commandButton value="Grabar" icon="ui-icon-disk" action="#{agenteControl.grabar()}" ajax="false" update=":agenteForm,:growl" />
+                            <p:commandButton value="Grabar" icon="ui-icon-disk" action="#{agenteControl.grabar()}" ajax="false" update=":agenteForm,:growl" rendered="#{usuariosControl.opcion}"/>
                         </f:facet>
                     </p:toolbar>
                     <p:tabView id="tabViewDatos">
@@ -20,12 +20,10 @@
                         <p:tab id="tadDatos" title="Datos Agente">
 
                             <h:panelGrid columns="2">
-                                <p:outputLabel for="estado" value="Estado"/>
-                                <p:selectOneMenu id="estado" value="#{agenteControl.idEstado}" required="false" >    
-                                    <f:selectItem itemValue="" itemLabel="Seleccione"/>
-                                    <f:selectItems value="#{agenteControl.getListParametros(agenteControl.estado)}"/>        
-                                </p:selectOneMenu>
                                 
+                                <h:outputLabel for="activo" value="Activo"/>
+                                   <p:selectBooleanCheckbox  id="activo" value="#{agenteControl.agente.activo}" required="false" requiredMessage="Obligatorio" />
+
                                 <h:outputLabel for="cedula" value="Cedula: *" />
                                 <p:inputText id="cedula" value="#{agenteControl.agente.cedAgente}" required="false" requiredMessage="Ingrese la cedula" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" />
 
@@ -163,7 +161,7 @@
                                     </p:inputTextarea>
                                     
                                     <p:commandButton value="Agregar" icon="ui-icon-disk" actionListener="#{agenteControl.agregarDependiente()}" process="@this" 
-                                                     update=":growl,:agenteForm,:agenteForm:tabViewDatos:tabDependientes,:agenteForm:tabViewDatos:tablaParientes" />
+                                                     update=":growl,:agenteForm:tabViewDatos:tabDependientes,:agenteForm:tabViewDatos:tablaParientes" />
 
                                 </h:panelGrid>
                              
@@ -208,7 +206,7 @@
                                     </p:inputText>
                                     
                                     <p:commandButton value="Agregar" icon="ui-icon-disk" actionListener="#{agenteControl.agregarBanco()}" process="@this" 
-                                                     update=":growl,:agenteForm,:agenteForm:tabViewDatos:tabBancos,:agenteForm:tabViewDatos:tablaBancos" />
+                                                     update=":growl,:agenteForm:tabViewDatos:tabBancos,:agenteForm:tabViewDatos:tablaBancos" />
                                 </h:panelGrid>
                             
                             <p:dataTable id="tablaBancos" value="#{agenteControl.listaBancos}" var="cuentaBancos" paginator="true" rows="4" 
@@ -250,7 +248,7 @@
                                     </p:inputTextarea>
                                     
                                     <p:commandButton value="Agregar" icon="ui-icon-disk" actionListener="#{agenteControl.agregarComunicado()}" process="@this" 
-                                                     update=":growl,:agenteForm,:agenteForm:tabViewDatos:tabComunicado,:agenteForm:tabViewDatos:tablaComunicado" />
+                                                     update=":growl,:agenteForm:tabViewDatos:tabComunicado,:agenteForm:tabViewDatos:tablaComunicado" />
 
                                 </h:panelGrid>
                             <p:dataTable id="tablaComunicado" value="#{agenteControl.listaComunicados}" var="comunicados" paginator="true" rows="4" 
@@ -313,7 +311,7 @@
                                     </p:inputTextarea>
 
                                     <p:commandButton value="Agregar" icon="ui-icon-disk" actionListener="#{agenteControl.agregarCurso()}" process="@this" 
-                                                     update=":growl,:agenteForm,:agenteForm:tabViewDatos:tabCursos,:agenteForm:tabViewDatos:tablaCurso" />
+                                                     update=":growl,:agenteForm:tabViewDatos:tabCursos,:agenteForm:tabViewDatos:tablaCurso" />
 
                                 </h:panelGrid>  
                             
@@ -358,7 +356,7 @@
                                     </p:inputTextarea>
                                     
                                     <p:commandButton value="Agregar" icon="ui-icon-disk" actionListener="#{agenteControl.agregarFelicitacion()}" process="@this" 
-                                                     update=":growl,:agenteForm,:agenteForm:tabViewDatos:tabFelicitaciones,:agenteForm:tabViewDatos:tablaFelicitacion" />
+                                                     update=":growl,:agenteForm:tabViewDatos:tabFelicitaciones,:agenteForm:tabViewDatos:tablaFelicitacion" />
 
                                 </h:panelGrid>  
                             
@@ -404,7 +402,7 @@
                                     </p:inputTextarea> 
 
                                     <p:commandButton value="Agregar" icon="ui-icon-disk" actionListener="#{agenteControl.agregarOperativos()}" process="@this" 
-                                                     update=":growl,:agenteForm,:agenteForm:tabViewDatos:tabOperativos,:agenteForm:tabViewDatos:tablaOperativo" />
+                                                     update=":growl,:agenteForm:tabViewDatos:tabOperativos,:agenteForm:tabViewDatos:tablaOperativo" />
 
                                 </h:panelGrid>  
                             
@@ -455,7 +453,7 @@
                                     </p:inputText>
 
                                     <p:commandButton value="Agregar" icon="ui-icon-disk" actionListener="#{agenteControl.agregrarPases()}" process="@this" 
-                                                     update=":growl,:agenteForm,:agenteForm:tabViewDatos:tabPases,:agenteForm:tabViewDatos:tablaPase" />
+                                                     update=":growl,:agenteForm:tabViewDatos:tabPases,:agenteForm:tabViewDatos:tablaPase" />
 
                                 </h:panelGrid>  
                             
@@ -509,7 +507,7 @@
                                 
                                 
                                 <p:commandButton value="Agregar" icon="ui-icon-disk" actionListener="#{agenteControl.agregarPermisos()}" process="@this" 
-                                                     update=":growl,:agenteForm,:agenteForm:tabViewDatos:tabLicencias,:agenteForm:tabViewDatos:tablaLicencia" />
+                                                     update=":growl,:agenteForm:tabViewDatos:tabLicencias,:agenteForm:tabViewDatos:tablaLicencia" />
 
                                 </h:panelGrid>  
                             

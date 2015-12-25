@@ -7,7 +7,6 @@ package ec.gob.uideh.menu.entidades;
 
 import ec.gob.uideh.agentes.entidades.Parametros;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -19,13 +18,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -39,7 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuarios.findById", query = "SELECT u FROM Usuarios u WHERE u.id = :id"),
     @NamedQuery(name = "Usuarios.findByContrasena", query = "SELECT u FROM Usuarios u WHERE u.contrasena = :contrasena"),
     @NamedQuery(name = "Usuarios.findByFechaCreacion", query = "SELECT u FROM Usuarios u WHERE u.fechaCreacion = :fechaCreacion"),
-    @NamedQuery(name = "Usuarios.findByFechaVencimiento", query = "SELECT u FROM Usuarios u WHERE u.fechaVencimiento = :fechaVencimiento"),
     @NamedQuery(name = "Usuarios.findByUsuario", query = "SELECT u FROM Usuarios u WHERE u.usuario = :usuario"),
     @NamedQuery(name = "Usuarios.findByNombres", query = "SELECT u FROM Usuarios u WHERE u.nombres = :nombres"),
     @NamedQuery(name = "Usuarios.findByApellidos", query = "SELECT u FROM Usuarios u WHERE u.apellidos = :apellidos")})
@@ -54,11 +50,8 @@ public class Usuarios implements Serializable {
     @Column(name = "contrasena")
     private String contrasena;
     @Column(name = "fecha_creacion")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
-    @Column(name = "fecha_vencimiento")
-    @Temporal(TemporalType.DATE)
-    private Date fechaVencimiento;
     @Size(max = 30)
     @Column(name = "usuario")
     private String usuario;
@@ -68,13 +61,12 @@ public class Usuarios implements Serializable {
     @Size(max = 255)
     @Column(name = "Apellidos")
     private String apellidos;
-    @OneToMany(mappedBy = "usuario")
-    private Collection<UsuarioMenu> usuarioMenuCollection;
+    @JoinColumn(name = "rol_id", referencedColumnName = "id")
+    @ManyToOne
+    private Parametros rolId;
     @JoinColumn(name = "estado", referencedColumnName = "id")
     @ManyToOne
     private Parametros estado;
-    @OneToMany(mappedBy = "usuarios")
-    private Collection<UsuariosRoles> usuariosRolesCollection;
 
     public Usuarios() {
     }
@@ -107,14 +99,6 @@ public class Usuarios implements Serializable {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public Date getFechaVencimiento() {
-        return fechaVencimiento;
-    }
-
-    public void setFechaVencimiento(Date fechaVencimiento) {
-        this.fechaVencimiento = fechaVencimiento;
-    }
-
     public String getUsuario() {
         return usuario;
     }
@@ -139,13 +123,12 @@ public class Usuarios implements Serializable {
         this.apellidos = apellidos;
     }
 
-    @XmlTransient
-    public Collection<UsuarioMenu> getUsuarioMenuCollection() {
-        return usuarioMenuCollection;
+    public Parametros getRolId() {
+        return rolId;
     }
 
-    public void setUsuarioMenuCollection(Collection<UsuarioMenu> usuarioMenuCollection) {
-        this.usuarioMenuCollection = usuarioMenuCollection;
+    public void setRolId(Parametros rolId) {
+        this.rolId = rolId;
     }
 
     public Parametros getEstado() {
@@ -154,15 +137,6 @@ public class Usuarios implements Serializable {
 
     public void setEstado(Parametros estado) {
         this.estado = estado;
-    }
-
-    @XmlTransient
-    public Collection<UsuariosRoles> getUsuariosRolesCollection() {
-        return usuariosRolesCollection;
-    }
-
-    public void setUsuariosRolesCollection(Collection<UsuariosRoles> usuariosRolesCollection) {
-        this.usuariosRolesCollection = usuariosRolesCollection;
     }
 
     @Override

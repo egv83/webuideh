@@ -113,7 +113,6 @@ public class UsuariosControl extends Comun implements Serializable {
         this.setUser(null);
         this.setClave(null);
         this.setCheckEstado(Boolean.FALSE);
-
         this.setIdRol(null);
         this.setCheckEstado(Boolean.FALSE);
     }

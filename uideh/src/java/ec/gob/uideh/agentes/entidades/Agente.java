@@ -5,7 +5,9 @@
  */
 package ec.gob.uideh.agentes.entidades;
 
+import ec.gob.uideh.vehiculos.entidades.Fuentes;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -17,11 +19,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -47,14 +51,31 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Agente.findByTelefono1", query = "SELECT a FROM Agente a WHERE a.telefono1 = :telefono1"),
     @NamedQuery(name = "Agente.findByTelefono2", query = "SELECT a FROM Agente a WHERE a.telefono2 = :telefono2")})
 public class Agente implements Serializable {
+    @Column(name = "cedAgente")
+    private Integer cedAgente;
+    @Column(name = "tallaAgente")
+    private Integer tallaAgente;
+    @Column(name = "calzadoAgente")
+    private Integer calzadoAgente;
+    @Column(name = "gorraAgente")
+    private Integer gorraAgente;
+    @Column(name = "telefono1")
+    private Integer telefono1;
+    @Column(name = "telefono2")
+    private Integer telefono2;
+    @Column(name = "activo")
+    private Boolean activo;
+    @Column(name = "fecha_creacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacion;
+    @OneToMany(mappedBy = "agenteId")
+    private Collection<Fuentes> fuentesCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idAgente")
     private Long idAgente;
-    @Column(name = "cedAgente")
-    private Long cedAgente;
     @Size(max = 40)
     @Column(name = "apellAgente")
     private String apellAgente;
@@ -70,22 +91,12 @@ public class Agente implements Serializable {
     @Size(max = 10)
     @Column(name = "nomCombate")
     private String nomCombate;
-    @Column(name = "tallaAgente")
-    private Long tallaAgente;
-    @Column(name = "calzadoAgente")
-    private Long calzadoAgente;
-    @Column(name = "gorraAgente")
-    private Long gorraAgente;
     @Size(max = 50)
     @Column(name = "direcAgente")
     private String direcAgente;
     @Size(max = 100)
     @Column(name = "fotoAgente")
     private String fotoAgente;
-    @Column(name = "telefono1")
-    private Long telefono1;
-    @Column(name = "telefono2")
-    private Long telefono2;
     @JoinColumn(name = "idNiveleduc", referencedColumnName = "id")
     @ManyToOne
     private Parametros idNiveleduc;
@@ -135,13 +146,6 @@ public class Agente implements Serializable {
         this.idAgente = idAgente;
     }
 
-    public Long getCedAgente() {
-        return cedAgente;
-    }
-
-    public void setCedAgente(Long cedAgente) {
-        this.cedAgente = cedAgente;
-    }
 
     public String getApellAgente() {
         return apellAgente;
@@ -183,29 +187,6 @@ public class Agente implements Serializable {
         this.nomCombate = nomCombate;
     }
 
-    public Long getTallaAgente() {
-        return tallaAgente;
-    }
-
-    public void setTallaAgente(Long tallaAgente) {
-        this.tallaAgente = tallaAgente;
-    }
-
-    public Long getCalzadoAgente() {
-        return calzadoAgente;
-    }
-
-    public void setCalzadoAgente(Long calzadoAgente) {
-        this.calzadoAgente = calzadoAgente;
-    }
-
-    public Long getGorraAgente() {
-        return gorraAgente;
-    }
-
-    public void setGorraAgente(Long gorraAgente) {
-        this.gorraAgente = gorraAgente;
-    }
 
     public String getDirecAgente() {
         return direcAgente;
@@ -223,21 +204,6 @@ public class Agente implements Serializable {
         this.fotoAgente = fotoAgente;
     }
 
-    public Long getTelefono1() {
-        return telefono1;
-    }
-
-    public void setTelefono1(Long telefono1) {
-        this.telefono1 = telefono1;
-    }
-
-    public Long getTelefono2() {
-        return telefono2;
-    }
-
-    public void setTelefono2(Long telefono2) {
-        this.telefono2 = telefono2;
-    }
 
     public Parametros getIdNiveleduc() {
         return idNiveleduc;
@@ -350,6 +316,79 @@ public class Agente implements Serializable {
     @Override
     public String toString() {
         return "ec.gob.uideh.entidades.Agente[ idAgente=" + idAgente + " ]";
+    }
+
+    public Integer getCedAgente() {
+        return cedAgente;
+    }
+
+    public void setCedAgente(Integer cedAgente) {
+        this.cedAgente = cedAgente;
+    }
+
+    public Integer getTallaAgente() {
+        return tallaAgente;
+    }
+
+    public void setTallaAgente(Integer tallaAgente) {
+        this.tallaAgente = tallaAgente;
+    }
+
+    public Integer getCalzadoAgente() {
+        return calzadoAgente;
+    }
+
+    public void setCalzadoAgente(Integer calzadoAgente) {
+        this.calzadoAgente = calzadoAgente;
+    }
+
+    public Integer getGorraAgente() {
+        return gorraAgente;
+    }
+
+    public void setGorraAgente(Integer gorraAgente) {
+        this.gorraAgente = gorraAgente;
+    }
+
+    public Integer getTelefono1() {
+        return telefono1;
+    }
+
+    public void setTelefono1(Integer telefono1) {
+        this.telefono1 = telefono1;
+    }
+
+    public Integer getTelefono2() {
+        return telefono2;
+    }
+
+    public void setTelefono2(Integer telefono2) {
+        this.telefono2 = telefono2;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    @XmlTransient
+    public Collection<Fuentes> getFuentesCollection() {
+        return fuentesCollection;
+    }
+
+    public void setFuentesCollection(Collection<Fuentes> fuentesCollection) {
+        this.fuentesCollection = fuentesCollection;
     }
     
 }

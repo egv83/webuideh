@@ -36,7 +36,7 @@ public class AgentesDao {
     
     public List<Agente> listaAgentes()throws Exception {
         StringBuilder consulta = new StringBuilder();
-        consulta.append("SELECT agente FROM ec.gob.uideh.entidades.Agente agente ");
+        consulta.append("SELECT agente FROM ec.gob.uideh.agentes.entidades.Agente agente ");
         consulta.append("ORDER BY agente.idAgente ");
         Query query = entityManager.createQuery(consulta.toString());
         if(query.getResultList()!=null && !query.getResultList().isEmpty()){

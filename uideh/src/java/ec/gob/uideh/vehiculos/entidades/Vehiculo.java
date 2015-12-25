@@ -43,10 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Vehiculo.findByAnio", query = "SELECT v FROM Vehiculo v WHERE v.anio = :anio"),
     @NamedQuery(name = "Vehiculo.findByColor", query = "SELECT v FROM Vehiculo v WHERE v.color = :color"),
     @NamedQuery(name = "Vehiculo.findByUnidadServicio", query = "SELECT v FROM Vehiculo v WHERE v.unidadServicio = :unidadServicio"),
-    @NamedQuery(name = "Vehiculo.findByImgvehiculo1", query = "SELECT v FROM Vehiculo v WHERE v.imgvehiculo1 = :imgvehiculo1"),
-    @NamedQuery(name = "Vehiculo.findByImgvehiculo2", query = "SELECT v FROM Vehiculo v WHERE v.imgvehiculo2 = :imgvehiculo2"),
-    @NamedQuery(name = "Vehiculo.findByImgvehiculo3", query = "SELECT v FROM Vehiculo v WHERE v.imgvehiculo3 = :imgvehiculo3"),
-    @NamedQuery(name = "Vehiculo.findByImgvehiculo4", query = "SELECT v FROM Vehiculo v WHERE v.imgvehiculo4 = :imgvehiculo4")})
+    @NamedQuery(name = "Vehiculo.findByActivo", query = "SELECT v FROM Vehiculo v WHERE v.activo = :activo")})
 public class Vehiculo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -73,31 +70,20 @@ public class Vehiculo implements Serializable {
     @Column(name = "tipo")
     private String tipo;
     @Column(name = "anio")
-    private Long anio;
+    private Integer anio;
     @Size(max = 20)
     @Column(name = "color")
     private String color;
     @Size(max = 20)
     @Column(name = "unidadServicio")
     private String unidadServicio;
-    @Size(max = 255)
-    @Column(name = "imgvehiculo1")
-    private String imgvehiculo1;
-    @Size(max = 255)
-    @Column(name = "imgvehiculo2")
-    private String imgvehiculo2;
-    @Size(max = 255)
-    @Column(name = "imgvehiculo3")
-    private String imgvehiculo3;
-    @Size(max = 255)
-    @Column(name = "imgvehiculo4")
-    private String imgvehiculo4;
+    @Column(name = "activo")
+    private Boolean activo;
     @OneToMany(mappedBy = "vehiculoId")
-    private Collection<Seguro> seguroCollection;
-    @OneToMany(mappedBy = "vehiculoId")
-    private Collection<TablaValores> tablaValoresCollection;
-    @OneToMany(mappedBy = "vehiculoId")
-    private Collection<Historialvehiculo> historialvehiculoCollection;
+    private Collection<Imagens> imagensCollection;
+    @JoinColumn(name = "imgvehiculo_id", referencedColumnName = "id")
+    @ManyToOne
+    private Imagens imgvehiculoId;
     @JoinColumn(name = "cilindraje_id", referencedColumnName = "id")
     @ManyToOne
     private Parametros cilindrajeId;
@@ -107,8 +93,6 @@ public class Vehiculo implements Serializable {
     @JoinColumn(name = "estado_id", referencedColumnName = "id")
     @ManyToOne
     private Parametros estadoId;
-    @OneToMany(mappedBy = "vehiculoId")
-    private Collection<Custodio> custodioCollection;
 
     public Vehiculo() {
     }
@@ -173,11 +157,11 @@ public class Vehiculo implements Serializable {
         this.tipo = tipo;
     }
 
-    public Long getAnio() {
+    public Integer getAnio() {
         return anio;
     }
 
-    public void setAnio(Long anio) {
+    public void setAnio(Integer anio) {
         this.anio = anio;
     }
 
@@ -197,63 +181,29 @@ public class Vehiculo implements Serializable {
         this.unidadServicio = unidadServicio;
     }
 
-    public String getImgvehiculo1() {
-        return imgvehiculo1;
+    public Boolean getActivo() {
+        return activo;
     }
 
-    public void setImgvehiculo1(String imgvehiculo1) {
-        this.imgvehiculo1 = imgvehiculo1;
-    }
-
-    public String getImgvehiculo2() {
-        return imgvehiculo2;
-    }
-
-    public void setImgvehiculo2(String imgvehiculo2) {
-        this.imgvehiculo2 = imgvehiculo2;
-    }
-
-    public String getImgvehiculo3() {
-        return imgvehiculo3;
-    }
-
-    public void setImgvehiculo3(String imgvehiculo3) {
-        this.imgvehiculo3 = imgvehiculo3;
-    }
-
-    public String getImgvehiculo4() {
-        return imgvehiculo4;
-    }
-
-    public void setImgvehiculo4(String imgvehiculo4) {
-        this.imgvehiculo4 = imgvehiculo4;
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
     @XmlTransient
-    public Collection<Seguro> getSeguroCollection() {
-        return seguroCollection;
+    public Collection<Imagens> getImagensCollection() {
+        return imagensCollection;
     }
 
-    public void setSeguroCollection(Collection<Seguro> seguroCollection) {
-        this.seguroCollection = seguroCollection;
+    public void setImagensCollection(Collection<Imagens> imagensCollection) {
+        this.imagensCollection = imagensCollection;
     }
 
-    @XmlTransient
-    public Collection<TablaValores> getTablaValoresCollection() {
-        return tablaValoresCollection;
+    public Imagens getImgvehiculoId() {
+        return imgvehiculoId;
     }
 
-    public void setTablaValoresCollection(Collection<TablaValores> tablaValoresCollection) {
-        this.tablaValoresCollection = tablaValoresCollection;
-    }
-
-    @XmlTransient
-    public Collection<Historialvehiculo> getHistorialvehiculoCollection() {
-        return historialvehiculoCollection;
-    }
-
-    public void setHistorialvehiculoCollection(Collection<Historialvehiculo> historialvehiculoCollection) {
-        this.historialvehiculoCollection = historialvehiculoCollection;
+    public void setImgvehiculoId(Imagens imgvehiculoId) {
+        this.imgvehiculoId = imgvehiculoId;
     }
 
     public Parametros getCilindrajeId() {
@@ -278,15 +228,6 @@ public class Vehiculo implements Serializable {
 
     public void setEstadoId(Parametros estadoId) {
         this.estadoId = estadoId;
-    }
-
-    @XmlTransient
-    public Collection<Custodio> getCustodioCollection() {
-        return custodioCollection;
-    }
-
-    public void setCustodioCollection(Collection<Custodio> custodioCollection) {
-        this.custodioCollection = custodioCollection;
     }
 
     @Override

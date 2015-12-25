@@ -20,7 +20,7 @@
                         </h:panelGrid>
                     </p:panel>   
                     <p:separator/>
-                    <p:commandButton value="Nuevo Agente" icon="ui-icon-document" action="nuevoAgente.xhtml?faces-redirect=true" />
+                        <p:commandButton value="Nuevo Agente" icon="ui-icon-document" action="nuevoAgente.xhtml?faces-redirect=true" />
                     <p:separator/>
                     <p:dataTable id="tablaAgente" value="#{agenteControl.listadoAgentes}" var="agente" paginator="true" rows="15" emptyMessage="NO HAY DATOS..!!!">
                         <f:facet name="header">
@@ -40,10 +40,6 @@
                         </p:column>
                         <p:column headerText="Estado">
                             <h:outputLabel value="#{agente.statusAgente.parametro}" />
-                        </p:column>
-                        <p:column headerText="Accion">
-                            <h:commandButton value="Modifcar"/>
-                            <h:commandButton value="Ver"/>
                         </p:column>
                     </p:dataTable>
                 </h:form>

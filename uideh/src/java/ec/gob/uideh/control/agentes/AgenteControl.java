@@ -71,6 +71,7 @@ public class AgenteControl extends Comun implements Serializable {
     private PermisoDao permisoDao;
     
         
+    private Agente agente; //objeto tipo agente
     private Dependiente dependiente;
     private CuentaBancos cuentaBancos;
     private Comunicados comunicados;
@@ -79,9 +80,6 @@ public class AgenteControl extends Comun implements Serializable {
     private Operativos operativos;
     private Pases pases;
     private Permisos permisos;
-
-  
-    private Agente agente; //objeto tipo agente
     
     private String cedula; //variables de busqueda
     private String nombres; //variables de busqueda
@@ -98,6 +96,8 @@ public class AgenteControl extends Comun implements Serializable {
     private Long idLicencia;
     private Long idEstado;
     private Long idAgentes;
+    private Boolean opcion;
+    private Boolean checkEstado;
     
     Long idDependienteTmp = new Long(0);
     Long idBancoTmp = new Long(0);
@@ -111,7 +111,7 @@ public class AgenteControl extends Comun implements Serializable {
     UploadedFile file;
     private DefaultStreamedContent imagen;
     String rutaImagen;
-    Boolean render;
+    
    
     //lista de objetos 
     private List<Dependiente> listaDependientes;
@@ -123,7 +123,7 @@ public class AgenteControl extends Comun implements Serializable {
     private List<Pases> listaPases;
     private List<Permisos> listaLicencias;
     
-//variable parentesco
+    //variable parentesco
     private Long idparentesco;
     // variable bancos
     private Long idnombrebanco;
@@ -179,7 +179,6 @@ public class AgenteControl extends Comun implements Serializable {
         this.file = file;
         this.imagen = imagen;
         this.rutaImagen = rutaImagen;
-        this.render = render;
         this.idparentesco = idparentesco;
         this.idnombrebanco = idnombrebanco;
         this.idtipocuenta = idtipocuenta;
@@ -265,6 +264,7 @@ public class AgenteControl extends Comun implements Serializable {
 
     public void nuevo() {
         this.setAgente(new Agente());
+        this.setOpcion(Boolean.TRUE);
     }
 
     public void grabar() {
@@ -297,9 +297,6 @@ public class AgenteControl extends Comun implements Serializable {
             Parametros licencia = new Parametros(this.getIdLicencia());
             this.getAgente().setIdLicenCond(licencia);
 
-            Parametros estado = new Parametros(this.getIdEstado());
-            this.getAgente().setStatusAgente(estado);
-
             Parametros agencia = new Parametros(this.getIdAgencia());
             this.getAgente().setIdAgencia(agencia);
 
@@ -308,7 +305,6 @@ public class AgenteControl extends Comun implements Serializable {
             /*ponerMensajeInfo("RUTA DE IMAGEN: "+this.getRutaImagen());
             ponerMensajeInfo("NOMBRES: "+this.getAgente().getNomAgente());
             ponerMensajeInfo("APELLIDOS: "+this.getAgente().getApellAgente());*/
-            
             this.agentesDao.ingresar(this.getAgente());
 
             // GRABAR DEPENDIENTES//
@@ -509,7 +505,14 @@ public class AgenteControl extends Comun implements Serializable {
     public Long getTitulo() {
         return TITULO;
     }
+    
+    public Boolean getOpcion() {
+        return opcion;
+    }
 
+    public void setOpcion(Boolean opcion) {
+        this.opcion = opcion;
+    }
     public Long getServicio() {
         return SERVICIO;
     }
@@ -656,14 +659,7 @@ public class AgenteControl extends Comun implements Serializable {
         this.idEstado = idEstado;
     }
 
-    public Boolean getRender() {
-        return render;
-    }
-
-    public void setRender(Boolean render) {
-        this.render = render;
-    }
-
+    
     public DefaultStreamedContent getImagen() {
         return imagen;
     }
@@ -678,6 +674,14 @@ public class AgenteControl extends Comun implements Serializable {
 
     public void setRutaImagen(String rutaImagen) {
         this.rutaImagen = rutaImagen;
+    }
+
+    public Boolean getCheckEstado() {
+        return checkEstado;
+    }
+
+    public void setCheckEstado(Boolean checkEstado) {
+        this.checkEstado = checkEstado;
     }
 
     

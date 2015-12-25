@@ -58,8 +58,7 @@ public class DependienteControl extends Comun implements Serializable{
         return null;
     }
     
-    public List<SelectItem> getListParametros(){
-       
+    public List<SelectItem> getListParametros(){   
          List<SelectItem> lista = new ArrayList<SelectItem>();
          try{
              for(Parametros par: this.parametrosDao.listarParametros(this.getParentesco())){
