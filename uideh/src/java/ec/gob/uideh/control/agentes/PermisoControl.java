@@ -56,10 +56,10 @@ public class PermisoControl extends Comun implements Serializable{
         return null;
     }
     
-    public List<SelectItem> getListParametros(){
+    public List<SelectItem> getListTipoPermiso(){
          List<SelectItem> lista = new ArrayList<SelectItem>();
          try{
-             for(Parametros par: this.parametrosDao.listarParametros(this.getTipoPermiso())){
+             for(Parametros par: this.parametrosDao.listarParametros(TIPOPERMISO)){
                  lista.add(new SelectItem(par.getId(), par.getParametro()));
              }
          }catch (Exception e){

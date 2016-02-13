@@ -1,0 +1,169 @@
+/* 
+    Document   : style
+    Created on : 01/11/2013, 04:34:00 PM
+    Author     : Usuario
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+html 
+{ 
+    font-size:10px;
+    padding:0; 
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#body{
+    font-size: 12px;
+    border: thick solid buttonface;
+    margin: 0px;
+}
+
+h1{
+    font-family: Georgia, "Times New Roman", Times, serif
+}
+
+.etiqueta{
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/*****************************************************************************
+*****************    DIV DE TEMPLATE    *************************************/
+
+#top {
+    /*border: #ff0000 thin solid;*/
+    position: relative;
+    /*background-color: #036fab;*/
+    color: white;
+    padding: 5px;
+    margin: 0px 0px 10px 0px;
+}
+#left {
+    float: left;
+    /*background-color: #ece3a5;
+    border: #036fab thin solid;*/
+    padding: 5px;
+    width: 150px;
+    overflow: hidden;
+}
+
+#bottom {
+    position: relative;
+    background-color: #c2dfef;
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+}
+
+#content{
+    /*border: thin solid #99ccff;
+    background: #ffffff;*/
+    padding: 5px;
+    margin-left: 170px;
+    min-height: 800px;
+    overflow: auto;
+    /*max-height: 990px;*/
+}
+
+#contenido{
+    border: #036fab thin solid;
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    left: 5%; 
+    right: 5%;
+    top: 5%;
+}
+/*****************************************************************/
+
+.centrado{
+    margin: 0 auto 0 auto;
+    width:80%;
+    display: inline-table;
+}
+
+.bordePanel, .ui.panel{
+    border: none;
+    overflow: hidden;
+}
+#cerrarSesion{
+    color: blue;
+    text-decoration: underline;
+}
+
+#logo{
+    background: url(../resources/img/logo.png) no-repeat 50% 50% ;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 70%;
+}
+
+#logoMaracaAgua{
+    /*background: url(../resources/img/logo.png) no-repeat 50% 50% ;*/
+    position: absolute;
+    /*top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 70%;*/
+    opacity: 0.6;
+}
+
+#login{ 
+    position: absolute;
+    padding: 10px;
+    top: 53%;
+    left: 23%;
+    /*top: 52%;
+    left: 29%;*/
+    margin: 0 auto 0 auto;
+    width: 50%;
+    height: 35%;
+    /*width: 40%;
+    height: 55%;*/
+    overflow: hidden;
+}
+
+
+
+.ui-layout, .ui-layout-doc, .ui-layout-unit, .ui-layout-wrap, .ui-layout-bd, .ui-layout-hd{
+    border: none;
+    margin: 0px 0px 0px 0px;
+    /*width: auto;*/
+}
+
+/*.ui-layout-unit-top .ui-layout-bd {
+   border: 0;
+}*/
+
+.ui-layout-unit-north {
+    size: 100px;
+}
+.center{
+    margin: 0 auto;
+    width:650px;
+    height:200px;
+    margin-top: 70px;
+    border: none;
+    background-color: #f7f7f7;
+}
+
+.sinBorde td,.sinBorde tr{
+    border: none;
+}
+
+.actionButtons {
+	padding-left: 1px;
+}
+
+.actionButtons select {
+	margin: 5px 5px 5px 0;
+	vertical-align: bottom;
+}
+
+.hide-column-names table thead tr {
+    display: none;
+    border: nobe;
+}

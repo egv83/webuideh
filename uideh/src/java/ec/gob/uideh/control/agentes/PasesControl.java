@@ -31,19 +31,21 @@ import javax.faces.model.SelectItem;
 
 public class PasesControl  extends Comun  implements Serializable{
     @EJB
-    private ParametroDao parametrosDao;
+    private ParametroDao parametroDao;
     @EJB
     private PasesDao pasesDao;
     
     private Pases pases;
     
     private Long idtipodocumentopase;//variable del combo
+    
        
     public PasesControl(){
     }
     
     @PostConstruct
     private void inicio(){
+        
     }
     
     public List<Pases> getListadoBancos(){
@@ -55,10 +57,10 @@ public class PasesControl  extends Comun  implements Serializable{
         return null;
     }
     
-    public List<SelectItem> getListParametros(){
+    public List<SelectItem> getListTipoDocumento(){
          List<SelectItem> lista = new ArrayList<SelectItem>();
          try{
-             for(Parametros par: this.parametrosDao.listarParametros(this.gettipodocumentopase())){
+             for(Parametros par: this.parametroDao.listarParametros(DOCUMENTO)){
                  lista.add(new SelectItem(par.getId(), par.getParametro()));
              }
 
@@ -67,7 +69,7 @@ public class PasesControl  extends Comun  implements Serializable{
          }       
          return lista;
      }
-    
+       
     public void nuevo(){
         this.setPases(new Pases());
     }
@@ -102,6 +104,5 @@ public class PasesControl  extends Comun  implements Serializable{
     public Long gettipodocumentopase() {
         return DOCUMENTO;
     }
-   
-    
+
 }

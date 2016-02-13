@@ -132,6 +132,16 @@ public class Agente implements Serializable {
     private Parametros idLicenCond;
 
     public Agente() {
+        this.idGrado = new Parametros();
+        this.idSexo = new Parametros();
+        this.idEstacivil = new Parametros();
+        this.idTiposangre = new Parametros();
+        this.idNiveleduc = new Parametros();
+        this.idTituloUniv = new Parametros();
+        this.idServicio = new Parametros();
+        this.idAgencia = new Parametros();
+        this.idDepartamento = new Parametros();
+        this.idLicenCond = new Parametros();
     }
 
     public Agente(Long idAgente) {

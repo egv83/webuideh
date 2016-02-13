@@ -63,6 +63,7 @@ public class Operativos implements Serializable {
     private Agente idAgente;
 
     public Operativos() {
+        this.idCiudad = new Parametros();
     }
 
     public Operativos(Long idOperativo) {

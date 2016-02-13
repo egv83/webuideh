@@ -77,6 +77,8 @@ public class Cursos implements Serializable {
     private Parametros idTipoCurso;
 
     public Cursos() {
+        this.idTipoCurso = new Parametros();
+        this.idLugarCurso = new Parametros();
     }
 
     public Cursos(Long idcurso) {

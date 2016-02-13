@@ -59,10 +59,10 @@ public class ComunicadosControl extends Comun implements Serializable{
         return null;
       }
       
-      public List<SelectItem> getListParametros(){
+      public List<SelectItem> getListaTipoDocumento(){
          List<SelectItem> lista = new ArrayList<SelectItem>();
          try{
-             for(Parametros par: this.parametrosDao.listarParametros(this.getDocumento())){
+             for(Parametros par: this.parametrosDao.listarParametros(DOCUMENTO)){
                  lista.add(new SelectItem(par.getId(), par.getParametro()));
              }
          }catch (Exception e){

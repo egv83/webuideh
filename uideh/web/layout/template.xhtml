@@ -8,6 +8,9 @@
     <f:view contentType="text/html">
         <h:head>
             <f:facet name="first">
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                <h:outputStylesheet library="css" name="style.css" />
+                <h:outputScript library="js" name="validador.js" />
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
                 <title>Talento Humano </title>
             </f:facet>
@@ -24,39 +27,39 @@
                 <p:layoutUnit position="south" size="40" closable="true" collapsible="true" >
                     Footer
                 </p:layoutUnit>
-                
+
                 <p:layoutUnit position="west" header ="Menu" collapsible="true">
-           
-                        <h:form>
-                                <p:growl autoUpdate="true"/>
 
-                                <p:panelMenu style="width:150px">
-                                    <p:submenu label="Ajax Menuitems">
-                                        <p:menuitem value="Save" actionListener="#{menuView.save}" icon="ui-icon-disk" />
-                                        <p:menuitem value="Update" actionListener="#{menuView.update}"  icon="ui-icon-arrowrefresh-1-w" />
-                                    </p:submenu>
-                                    <p:submenu label="Seguridad">
-                                                <p:menuitem value="Usuario"  outcome="/seguridad/usuarios" />                       
-                                    </p:submenu>
-                                    <p:separator />
-                                    <p:submenu label="Navigations" >
-                                        <p:submenu label="Links" icon="ui-icon-extlink">
-                                            <p:submenu label="PrimeFaces" icon="ui-icon-heart">
-                                                <p:menuitem value="Home" url="http://www.primefaces.org" icon="ui-icon-home" />
-                                                <p:menuitem value="Docs" url="http://www.primefaces.org/documentation" icon="ui-icon-document" />
-                                                <p:menuitem value="Tipo Parametro" outcome="/parametros/tipoparametro" />
-                                                <p:menuitem value="Parametros" outcome="/parametros/parametros" />
-                                                <p:menuitem value="Agente"  outcome="/talentoHumano/agente" />
+                    <h:form>
+                        <p:growl autoUpdate="true"/>
 
-                                            </p:submenu>
-                                        </p:submenu>
-                                        
+                        <p:panelMenu style="width:150px">
+                            <p:submenu label="Ajax Menuitems">
+                                <p:menuitem value="Save" actionListener="#{menuView.save}" icon="ui-icon-disk" />
+                                <p:menuitem value="Update" actionListener="#{menuView.update}"  icon="ui-icon-arrowrefresh-1-w" />
+                            </p:submenu>
+                            <p:submenu label="Seguridad">
+                                <p:menuitem value="Usuario"  outcome="/seguridad/usuarios" />                       
+                            </p:submenu>
+                            <p:separator />
+                            <p:submenu label="Navigations" >
+                                <p:submenu label="Links" icon="ui-icon-extlink">
+                                    <p:submenu label="PrimeFaces" icon="ui-icon-heart">
+                                        <p:menuitem value="Home" url="http://www.primefaces.org" icon="ui-icon-home" />
+                                        <p:menuitem value="Docs" url="http://www.primefaces.org/documentation" icon="ui-icon-document" />
+                                        <p:menuitem value="Tipo Parametro" outcome="/parametros/tipoparametro" />
+                                        <p:menuitem value="Parametros" outcome="/parametros/parametros" />
+                                        <p:menuitem value="Agente"  outcome="/talentoHumano/agente" />
+
                                     </p:submenu>
-                                </p:panelMenu>
-                            </h:form>
-                  
+                                </p:submenu>
+
+                            </p:submenu>
+                        </p:panelMenu>
+                    </h:form>
+
                 </p:layoutUnit>
-                
+
                 <p:layoutUnit position="center">
                     <p:outputPanel>
                         <p:growl id="growl" showDetail="false" sticky="false" life="5000" autoUpdate="true" globalOnly="true" />

@@ -52,6 +52,8 @@ public class CuentaBancos implements Serializable {
     private Parametros idTipocuenta;
 
     public CuentaBancos() {
+        this.idNombrebanco = new Parametros();
+        this.idTipocuenta = new Parametros();
     }
 
     public CuentaBancos(Long idBanco) {

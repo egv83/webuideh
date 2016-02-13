@@ -8,11 +8,12 @@
     
     <ui:composition template="/layout/template.xhtml">
         <ui:define name="content" >
-            <f:view transient="true" > 
+ 
                 <h:form id="agenteForm" enctype="multipart/form-data" >
                     <p:toolbar>
                         <f:facet name="left">
-                            <p:commandButton value="Grabar" icon="ui-icon-disk" action="#{agenteControl.grabar()}" ajax="false" update=":agenteForm,:growl" rendered="#{usuariosControl.opcion}"/>
+                            <!-- <p:commandButton value="Grabar" icon="ui-icon-disk" action="#{agenteControl.grabar()}" ajax="false" update=":agenteForm,:growl" rendered="#{usuariosControl.opcion}"/>-->
+                            <p:commandButton value="Grabar" icon="ui-icon-disk" action="#{agenteControl.grabar()}" ajax="false" update=":agenteForm,:growl" />
                         </f:facet>
                     </p:toolbar>
                     <p:tabView id="tabViewDatos">
@@ -24,8 +25,8 @@
                                 <h:outputLabel for="activo" value="Activo"/>
                                    <p:selectBooleanCheckbox  id="activo" value="#{agenteControl.agente.activo}" required="false" requiredMessage="Obligatorio" />
 
-                                <h:outputLabel for="cedula" value="Cedula: *" />
-                                <p:inputText id="cedula" value="#{agenteControl.agente.cedAgente}" required="false" requiredMessage="Ingrese la cedula" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" />
+                                <h:outputLabel for="cedula" value="Cedula: " />
+                                <p:inputText id="cedula" value="#{agenteControl.agente.cedAgente}" required="false" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" />
 
                                 <p:outputLabel for="grado" value="Grado"/>
                                 <p:selectOneMenu id="grado" value="#{agenteControl.idGrado}" required="false" >
@@ -120,15 +121,10 @@
                                 <p:outputLabel for="direccion" value="Direccion Domicilio: "/>
                                 <p:inputTextarea id="direccion" value="#{agenteControl.agente.direcAgente}" required="false" rows="3" cols="30" />
 
-                                <p:outputLabel />
+                                <p:outputLabel for="foto" value="Foto: "/>
                                 <h:panelGrid columns="2">
-                                    <p:fileUpload label="Avansado" value="#{agenteControl.file}" mode="advanced" invalidFileMessage="Tipo de archivo invalido"
-                                                  fileLimitMessage="Tatal de archivos no permitidos, solo se permite 1 archivo"
-                                                  invalidSizeMessage="Tamaño de archivo no permitido solo se permite archivos de 2MB"
-                                                  multiple="false" fileLimit="1" sizeLimit="2097152" 
-                                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                                                  fileUploadListener="#{agenteControl.upload}" update="image" />
-                                    <p:graphicImage id="image" value="#{agenteControl.imagen}" width="150" height="150" />
+                                    <h:inputHidden value="#{agenteControl.agente.cedAgente}" />
+                                    <p:fileUpload id="foto" mode="simple" value="#{agenteControl.file}" />
                                 </h:panelGrid>
 
                             </h:panelGrid>
@@ -184,7 +180,7 @@
 
                         </p:tab>
 
-                        <p:tab id="tabBancos" title="Bancos">                          
+                        <p:tab id="tabBancos" title="Bancos">
                                 <h:panelGrid columns="2">
                                     <p:outputLabel for="nombrebanco" value="Nombre Banco: "/>
                                     <p:selectOneMenu id="nombrebanco" value="#{agenteControl.idnombrebanco}" >    
@@ -227,13 +223,13 @@
                                        </p:dataTable>
                         </p:tab>
 
-                        <p:tab id="tabComunicado" title="Comunicados">                          
+                        <p:tab id="tabComunicado" title="Comunicados">
                                 <h:panelGrid columns="2">
 
                                     <p:outputLabel for="documento" value="Tipo Documento: "/>
                                     <p:selectOneMenu id="documento" value="#{agenteControl.idtipocomunicado}" >    
                                         <f:selectItem itemValue="" itemLabel="Seleccione"/>  
-                                        <f:selectItems value="#{comunicadosControl.getListParametros()}" /> 
+                                        <f:selectItems value="#{comunicadosControl.listaTipoDocumento}" /> 
                                         <p:ajax update="documento" />
                                     </p:selectOneMenu>
                                     
@@ -274,14 +270,14 @@
                                     <p:outputLabel for="idtipocurso" value="Tipo de Curso"/>
                                     <p:selectOneMenu id="idtipocurso" value="#{agenteControl.idtipocurso}">
                                         <f:selectItem itemValue="" itemLabel="Seleccione"/>
-                                        <f:selectItems value="#{cursosControl.getListParametros(cursosControl.tipocurso)}"/> 
+                                        <f:selectItems value="#{cursosControl.listaTipoCurso}"/> 
                                         <p:ajax update="idtipocurso"/>
                                     </p:selectOneMenu>
                                     
                                     <p:outputLabel for="idlugarcurso" value="Lugar de Curso"/>
                                     <p:selectOneMenu id="idlugarcurso" value="#{agenteControl.idlugarcurso}">
                                         <f:selectItem itemValue="" itemLabel="Seleccione"/>
-                                        <f:selectItems value="#{cursosControl.getListParametros(cursosControl.ciudadPais)}"/> 
+                                        <f:selectItems value="#{cursosControl.listaLugarCurso}"/> 
                                          <p:ajax update="idlugarcurso" />
                                     </p:selectOneMenu>
                                     
@@ -387,7 +383,7 @@
                                    <h:outputLabel for="ciudadOperativo" value="Lugar Operativo: "/>
                                    <p:selectOneMenu id="ciudadOperativo" value="#{agenteControl.idciudad}"  >    
                                         <f:selectItem itemValue="" itemLabel="Seleccione"/>  
-                                        <f:selectItems value="#{operativoControl.getListParametros()}" />  
+                                        <f:selectItems value="#{operativoControl.listCiudadOperativo}" />  
                                         <p:ajax update="ciudadOperativo" />
                                     </p:selectOneMenu>
 
@@ -434,7 +430,7 @@
                                     <h:outputLabel for="tipodocumentopase" value="Tipo Documento Pase: "/>
                                     <p:selectOneMenu id="tipodocumentopase" value="#{agenteControl.idtipodocumentopases}" >    
                                         <f:selectItem itemValue="" itemLabel="Seleccione"/>  
-                                        <f:selectItems value="#{pasesControl.getListParametros()}" />  
+                                        <f:selectItems value="#{pasesControl.listTipoDocumento}" />  
                                         <p:ajax update="tipodocumentopase" />
                                     </p:selectOneMenu>
                                      <p:outputLabel for ="paseDocumento" value="Documento de Pase: "/>
@@ -481,7 +477,7 @@
                                 <p:outputLabel for="idtipoPermiso" value="Tipo de permiso: "/>
                                 <p:selectOneMenu id="idtipoPermiso" value="#{agenteControl.idtipopermiso}">
                                     <f:selectItem itemValue="" itemLabel="Seleccione"/>  
-                                    <f:selectItems value="#{permisoControl.getListParametros()}"/>
+                                    <f:selectItems value="#{permisoControl.listTipoPermiso}"/>
                                     <p:ajax update="idtipoPermiso"/>
                                 </p:selectOneMenu>
                                 
@@ -534,7 +530,6 @@
                     </p:tabView>
 
                 </h:form>
-            </f:view>
         </ui:define>
     </ui:composition>
 </html>

@@ -61,7 +61,7 @@ public class Dependiente implements Serializable {
     private Agente idAgente;
 
     public Dependiente() {
-        
+        this.idParentesco = new Parametros();
     }
 
     public Dependiente(Long idDependiente) {

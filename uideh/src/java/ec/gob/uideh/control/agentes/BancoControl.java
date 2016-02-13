@@ -72,6 +72,32 @@ public class BancoControl extends Comun  implements Serializable{
          return lista;
      }
     
+    public List<SelectItem> getListaBancos(){
+         List<SelectItem> lista = new ArrayList<SelectItem>();
+         try{
+             for(Parametros par: this.parametrosDao.listarParametros(NOMBREBANCO)){
+                 lista.add(new SelectItem(par.getId(), par.getParametro()));
+             }
+
+         }catch (Exception e){
+             e.printStackTrace();
+         }       
+         return lista;
+     }
+    
+    public List<SelectItem> getListaTipoCuenta(){
+         List<SelectItem> lista = new ArrayList<SelectItem>();
+         try{
+             for(Parametros par: this.parametrosDao.listarParametros(TIPOCUENTA)){
+                 lista.add(new SelectItem(par.getId(), par.getParametro()));
+             }
+
+         }catch (Exception e){
+             e.printStackTrace();
+         }       
+         return lista;
+     }
+    
     public void nuevo(){
         this.setCuentabancos(new CuentaBancos());
     }

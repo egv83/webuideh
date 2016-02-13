@@ -66,6 +66,7 @@ public class Permisos implements Serializable {
     private Parametros idTipoPermiso;
 
     public Permisos() {
+        this.idTipoPermiso = new Parametros();
     }
 
     public Permisos(Long idPermiso) {

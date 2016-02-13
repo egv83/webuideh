@@ -89,6 +89,10 @@ public class Comun {
         getContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,mensaje,null));
     }
 
+    protected void ponerMensajeFatal(String mensaje) {
+        getContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,mensaje,null));
+    }
+    
     protected void ponerMensajeAlerta(String mensaje) {
         getContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,mensaje,null));
     }

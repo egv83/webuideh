@@ -33,7 +33,7 @@ public class DependienteControl extends Comun implements Serializable{
     @EJB
     private DependientesDao dependienteDao;
     @EJB
-    private ParametroDao parametrosDao;
+    private ParametroDao parametroDao;
     
     private Dependiente dependiente; //Objeto tipo Dependiente
     
@@ -41,7 +41,7 @@ public class DependienteControl extends Comun implements Serializable{
     private List<Dependiente> listaDependiente = new ArrayList<Dependiente>();
     
     public DependienteControl() {
-        
+        this.dependiente = new Dependiente();
     }
     
     @PostConstruct
@@ -58,10 +58,10 @@ public class DependienteControl extends Comun implements Serializable{
         return null;
     }
     
-    public List<SelectItem> getListParametros(){   
+    public List<SelectItem> getListParentesco(){   
          List<SelectItem> lista = new ArrayList<SelectItem>();
          try{
-             for(Parametros par: this.parametrosDao.listarParametros(this.getParentesco())){
+             for(Parametros par: this.parametroDao.listarParametros(PARENTESCO)){
                  lista.add(new SelectItem(par.getId(), par.getParametro()));
              }
          }catch (Exception e){

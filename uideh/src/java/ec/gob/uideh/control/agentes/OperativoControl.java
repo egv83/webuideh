@@ -57,10 +57,10 @@ public class OperativoControl extends Comun implements Serializable{
             return null;
         }
     
-    public List<SelectItem> getListParametros(){
+    public List<SelectItem> getListCiudadOperativo(){
         List<SelectItem> lista = new ArrayList<SelectItem>();
         try {
-            for(Parametros par: this.parametrosDao.listarParametros(this.getciudad())){
+            for(Parametros par: this.parametrosDao.listarParametros(CIUDADPAIS)){
                 lista.add(new SelectItem(par.getId(),par.getParametro()));
             }
         

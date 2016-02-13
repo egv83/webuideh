@@ -62,11 +62,24 @@ public class CursosControl extends Comun implements Serializable{
         return null;
     }
     
-    public List<SelectItem> getListParametros(Long tipoParam){
+    public List<SelectItem> getListaTipoCurso(){
         List<SelectItem> lista= new ArrayList<SelectItem>();
         
         try{
-            for(Parametros par: this.parametroDao.listarParametros(tipoParam)){
+            for(Parametros par: this.parametroDao.listarParametros(TIPOCURSO)){
+                 lista.add(new SelectItem(par.getId(), par.getParametro()));
+             }
+        }catch(Exception e){
+             e.printStackTrace();
+         }       
+         return lista; 
+    }
+    
+    public List<SelectItem> getListaLugarCurso(){
+        List<SelectItem> lista= new ArrayList<SelectItem>();
+        
+        try{
+            for(Parametros par: this.parametroDao.listarParametros(CIUDADPAIS)){
                  lista.add(new SelectItem(par.getId(), par.getParametro()));
              }
         }catch(Exception e){

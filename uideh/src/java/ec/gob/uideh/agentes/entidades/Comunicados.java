@@ -59,6 +59,7 @@ public class Comunicados implements Serializable {
     private Parametros idTipoComunicado;
 
     public Comunicados() {
+        this.idTipoComunicado = new Parametros();
     }
 
     public Comunicados(Long idComunicado) {

@@ -26,8 +26,13 @@ import ec.gob.uideh.agentes.entidades.Operativos;
 import ec.gob.uideh.agentes.entidades.Parametros;
 import ec.gob.uideh.agentes.entidades.Pases;
 import ec.gob.uideh.agentes.entidades.Permisos;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +41,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 import org.primefaces.model.UploadedFile;
 import org.primefaces.event.FileUploadEvent;
@@ -46,7 +52,8 @@ import org.primefaces.model.DefaultStreamedContent;
  * @author Pablo
  */
 @ManagedBean
-@SessionScoped
+//@SessionScoped
+@ViewScoped
 public class AgenteControl extends Comun implements Serializable {
 
     @EJB
@@ -254,12 +261,43 @@ public class AgenteControl extends Comun implements Serializable {
         }
     }
 
+    public void upload2()throws IOException{
+        InputStream inputStream=null;
+        OutputStream outputStream=null;
+        try{
+            System.out.println("CEDULA PASADO PARA UPLOAD2: "+this.getAgente().getCedAgente());
+            String str = file.getFileName();
+            String ext = str.substring(str.lastIndexOf('.'), str.length());        
+
+            outputStream = new FileOutputStream(new File(DESTINO_ARCHIVO+"a"+ext));
+            inputStream = this.file.getInputstream();
+            
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            
+            while((read = inputStream.read(bytes))!=-1)
+            {
+                outputStream.write(bytes,0,read);
+            }
+
+        }catch(Exception e){
+            ponerMensajeFatal("Por favor contacte con su administrador "+e.getMessage());
+        }
+        finally{
+            if(inputStream!=null){
+                inputStream.close();
+            }
+            if(outputStream!=null){
+                outputStream.close();
+            }
+        }
+    }
+    
     public void cargarImagen(String rutaImagen) throws FileNotFoundException {
         //FileInputStream fileInputStream = new FileInputStream("C:\\temp\\Desert.jpg");
         FileInputStream fileInputStream = new FileInputStream(rutaImagen);
         //this.setImagen(new DefaultStreamedContent(fileInputStream  , "image/jpg", "Desert.jpg"));
         this.setImagen(new DefaultStreamedContent(fileInputStream, "image/jpg"));
-
     }
 
     public void nuevo() {
@@ -300,12 +338,17 @@ public class AgenteControl extends Comun implements Serializable {
             Parametros agencia = new Parametros(this.getIdAgencia());
             this.getAgente().setIdAgencia(agencia);
 
+            System.out.println("Nombre: "+this.getAgente().getNomAgente());
+            
+            this.upload2();
+            
             this.getAgente().setFotoAgente(this.getRutaImagen());
 
             /*ponerMensajeInfo("RUTA DE IMAGEN: "+this.getRutaImagen());
             ponerMensajeInfo("NOMBRES: "+this.getAgente().getNomAgente());
             ponerMensajeInfo("APELLIDOS: "+this.getAgente().getApellAgente());*/
-            this.agentesDao.ingresar(this.getAgente());
+            
+            //this.agentesDao.ingresar(this.getAgente()); grabar
 
             // GRABAR DEPENDIENTES//
             //this.getDependiente().setIdAgente(this.getAgente());
@@ -317,37 +360,37 @@ public class AgenteControl extends Comun implements Serializable {
             this.getCuentaBancos().setIdAgente(this.getAgente());
             this.getCuentaBancos().setIdNombrebanco(new Parametros(this.getIdnombrebanco()));
             this.getCuentaBancos().setIdTipocuenta(new Parametros(this.getIdtipocuenta()));
-            this.cuentabancosDao.ingresar(this.getCuentaBancos());
+            //this.cuentabancosDao.ingresar(this.getCuentaBancos());  grabar
             
             // GRABAR COMUNICADOS//
             this.getComunicados().setIdAgente(this.getAgente());
             this.getComunicados().setIdTipoComunicado(new Parametros(this.getIdtipocomunicado()));
-            this.comunicadosDao.ingresar(this.getComunicados());
+            //this.comunicadosDao.ingresar(this.getComunicados()); grabar
             
             // GRABAR CURSOS//
             this.getCursos().setIdAgente(this.getAgente());
             this.getCursos().setIdTipoCurso(new Parametros(this.getIdtipocurso()));
             this.getCursos().setIdLugarCurso(new Parametros(this.getIdlugarcurso()));
-            this.cursosDao.ingresar(this.getCursos());
+            //this.cursosDao.ingresar(this.getCursos()); grabar
             
             //FELICITACIONES
             this.getFelicitaciones().setIdAgente(this.getAgente());
-            this.felicitacionDao.ingresar(this.getFelicitaciones());
+            //this.felicitacionDao.ingresar(this.getFelicitaciones()); grabar
             
             //OPERATIVOS
             this.getOperativos().setIdAgente(this.getAgente());
             this.getOperativos().setIdCiudad(new Parametros(this.idciudad));
-            this.operativoDao.ingresar(this.getOperativos());
+            //this.operativoDao.ingresar(this.getOperativos()); grabar
             
             //PASES
             this.getPases().setIdAgente(this.getAgente());
             this.getPases().setIdTipoDocumento(new Parametros(this.idtipodocumentopases));           
-            this.pasesDao.ingresar(this.getPases());
+            ///this.pasesDao.ingresar(this.getPases()); grabar
             
             //PERMISOS Y LICENCIAS
             this.getPermisos().setIdAgente(this.getAgente());
             this.getPermisos().setIdTipoPermiso(new Parametros(this.idtipopermiso));
-            this.permisoDao.ingresar(this.getPermisos());          
+            //this.permisoDao.ingresar(this.getPermisos());        grabar
             
             this.getListadoAgentes();
 

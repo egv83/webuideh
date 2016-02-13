@@ -66,6 +66,7 @@ public class Pases implements Serializable {
     private Parametros idTipoDocumento;
 
     public Pases() {
+        this.idTipoDocumento = new Parametros();
     }
 
     public Pases(Long idPase) {
